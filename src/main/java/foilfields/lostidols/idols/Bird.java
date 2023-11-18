@@ -4,7 +4,9 @@ import net.minecraft.block.*;
 import net.minecraft.client.util.ParticleUtil;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.particle.VibrationParticleEffect;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -17,6 +19,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import org.joml.Vector3f;
 
 public class Bird extends AbstractIdol implements LandingBlock {
     public Bird(Settings settings) {
@@ -45,11 +48,15 @@ public class Bird extends AbstractIdol implements LandingBlock {
     public void onLanding(World world, BlockPos pos, BlockState fallingBlockState, BlockState currentStateInPos, FallingBlockEntity fallingBlockEntity) {
         if (fallingBlockEntity.timeFalling > 70 && !fallingBlockState.get(CHARGED)) {
             world.setBlockState(pos, fallingBlockState.cycle(CHARGED), Block.NOTIFY_LISTENERS);
+            if (!world.isClient()) {
+                ((ServerWorld) world).spawnParticles(ParticleTypes.ANGRY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 3, 0.25, 0.25, 0.25, 0);
+            }
         }
 
         if (!fallingBlockEntity.isSilent()) {
             world.syncWorldEvent(1031, pos, 0);
         }
+
     }
 
     public void onDestroyedOnLanding(World world, BlockPos pos, FallingBlockEntity fallingBlockEntity) {
