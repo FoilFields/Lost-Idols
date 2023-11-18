@@ -31,7 +31,7 @@ public class LostIdols implements ModInitializer {
     public static final BlockEntityType<IdolBlockEntity> IDOL_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             GetIdentifier("idol_block_entity"),
-            FabricBlockEntityTypeBuilder.create(IdolBlockEntity::new, SPHINX_IDOL).build()
+            FabricBlockEntityTypeBuilder.create(IdolBlockEntity::new, SPHINX_IDOL,BIRD_IDOL).build()
     );
 
     @Override
