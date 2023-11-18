@@ -12,9 +12,7 @@ public class IdolBlockEntity extends BlockEntity {
         super(LostIdols.IDOL_BLOCK_ENTITY, pos, state);
     }
 
-
-
-    public static void tick(World world, BlockPos position, BlockState state, IdolBlockEntity blockEntity) {
+    public static void tick(World world, BlockPos position, BlockState state, IdolBlockEntity be) {
         AbstractIdol idol = ((AbstractIdol) state.getBlock());
         idol.tick(world, position);
     }

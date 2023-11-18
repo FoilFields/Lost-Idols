@@ -42,15 +42,14 @@ public abstract class AbstractIdol extends BlockWithEntity implements BlockEntit
         return new IdolBlockEntity(pos, state);
     }
 
-    @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, IdolBlockEntity::tick);
+        return checkType(type, LostIdols.IDOL_BLOCK_ENTITY, IdolBlockEntity::tick);
     }
 
     @Nullable
-    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> checkType(BlockEntityType<A> givenType, BlockEntityTicker<? super E> ticker) {
-        return LostIdols.IDOL_BLOCK_ENTITY == givenType ? (BlockEntityTicker<A>) ticker : null;
+    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> checkType(BlockEntityType<A> givenType, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
+        return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
     }
 
     @Override

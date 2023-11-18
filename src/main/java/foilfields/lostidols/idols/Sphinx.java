@@ -2,11 +2,9 @@ package foilfields.lostidols.idols;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.sound.Sound;
-import net.minecraft.client.sound.SoundEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -17,7 +15,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 public class Sphinx extends AbstractIdol {
     public Sphinx(Settings settings) {
@@ -25,13 +22,13 @@ public class Sphinx extends AbstractIdol {
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.cuboid(0.3f, 0f, 0.3f, 0.7f, 1.0f, 0.7f);
+    public void tick(World world, BlockPos position) {
+        world.playSound(null, position, SoundEvents.ENTITY_CAT_PURREOW, SoundCategory.BLOCKS);
     }
 
     @Override
-    public void tick(World world, BlockPos position) {
-        world.playSound(null, position, SoundEvents.ENTITY_CAT_PURR, SoundCategory.BLOCKS, 0.1f, 1.0f);
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.cuboid(0.3f, 0f, 0.3f, 0.7f, 1.0f, 0.7f);
     }
 
     @Override
@@ -41,11 +38,5 @@ public class Sphinx extends AbstractIdol {
         }
 
         return ActionResult.SUCCESS;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return null;
     }
 }
