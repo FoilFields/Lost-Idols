@@ -14,6 +14,6 @@ public class IdolBlockEntity extends BlockEntity {
 
     public static void tick(World world, BlockPos position, BlockState state, IdolBlockEntity be) {
         AbstractIdol idol = ((AbstractIdol) state.getBlock());
-        idol.tick(world, position);
+        idol.tick(state, world, position);
     }
 }

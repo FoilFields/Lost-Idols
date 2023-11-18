@@ -1,12 +1,11 @@
 package foilfields.lostidols.idols;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -22,8 +21,8 @@ public class Sphinx extends AbstractIdol {
     }
 
     @Override
-    public void tick(World world, BlockPos position) {
-        world.playSound(null, position, SoundEvents.ENTITY_CAT_PURREOW, SoundCategory.BLOCKS);
+    public void tick(BlockState state, World world, BlockPos position) {
+        if (state.get(CHARGED)) world.playSound(null, position, SoundEvents.ENTITY_CAT_PURREOW, SoundCategory.BLOCKS);
     }
 
     @Override
@@ -34,7 +33,7 @@ public class Sphinx extends AbstractIdol {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-            player.sendMessage(Text.of("Hello, world!"), false);
+            world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
         }
 
         return ActionResult.SUCCESS;

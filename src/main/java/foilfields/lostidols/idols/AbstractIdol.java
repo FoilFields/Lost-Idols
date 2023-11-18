@@ -29,13 +29,7 @@ public abstract class AbstractIdol extends BlockWithEntity implements BlockEntit
         this.setDefaultState(this.getDefaultState().with(CHARGED, false).with(FACING, Direction.NORTH));
     }
 
-    public abstract void tick(World world, BlockPos position);
-
-    public void charge(BlockState state, ServerWorld world, BlockPos pos) {
-        if (!state.get(CHARGED)) {
-            world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
-        }
-    }
+    public abstract void tick(BlockState state, World world, BlockPos position);
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
