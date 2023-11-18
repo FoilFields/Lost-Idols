@@ -2,6 +2,7 @@
     "replace": false,
     "values": [
         "lost_idols:sphinx_idol",
+        "lost_idols:moai_idol",
         "lost_idols:bird_idol"
     ]
 }
