@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "lost_idols:block/moai_idol",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "lost_idols:block/moai_idol"
+    },
+    "facing=south": {
+      "model": "lost_idols:block/moai_idol",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "lost_idols:block/moai_idol",
+      "y": 270
+    }
+  }
+}
