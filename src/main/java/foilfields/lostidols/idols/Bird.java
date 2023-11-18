@@ -2,17 +2,27 @@ package foilfields.lostidols.idols;
 
 import net.minecraft.block.*;
 import net.minecraft.client.util.ParticleUtil;
-import net.minecraft.entity.FallingBlockEntity;
+import net.minecraft.entity.*;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageSources;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.damage.DamageTypes;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.projectile.FireballEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.particle.VibrationParticleEffect;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -20,6 +30,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.joml.Vector3f;
+
+import java.util.List;
 
 public class Bird extends AbstractIdol implements LandingBlock {
     public Bird(Settings settings) {
@@ -76,7 +88,19 @@ public class Bird extends AbstractIdol implements LandingBlock {
 
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
-        if (state.get(CHARGED)) world.playSound(null, position, SoundEvents.ENTITY_CAT_PURREOW, SoundCategory.BLOCKS);
+        if (state.get(CHARGED) && !world.isClient){
+            Box area = new Box(new Vec3d(position.getX() - 50, position.getY() - 50, position.getZ() - 50), new Vec3d(position.getX() + 50, position.getY() + 50, position.getZ() + 50));
+            List<Entity> entities = world.getOtherEntities(null, area);
+
+            for(Entity ent: entities){
+                if(ent.getType().equals(EntityType.PHANTOM)){
+                    Vec3d dir = new Vec3d(ent.getPos().x - position.getX(), ent.getPos().y - position.getY(), ent.getPos().z - position.getZ()).normalize();
+                    //FireballEntity projectileEntity = new FireballEntity(world, world.getClosestPlayer(position.getX(), position.getY(), position.getZ(), 200, false), dir.x, dir.y, dir.z, 1);
+                    //world.spawnEntity(projectileEntity);
+                }
+            }
+        }
+
     }
 
     @Override
