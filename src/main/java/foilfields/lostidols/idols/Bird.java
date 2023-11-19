@@ -3,6 +3,7 @@ package foilfields.lostidols.idols;
 import net.minecraft.block.*;
 import net.minecraft.client.util.ParticleUtil;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.damage.DamageType;
@@ -29,6 +30,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import org.joml.Vector3d;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -95,8 +97,9 @@ public class Bird extends AbstractIdol implements LandingBlock {
             for(Entity ent: entities){
                 if(ent.getType().equals(EntityType.PHANTOM)){
                     Vec3d dir = new Vec3d(ent.getPos().x - position.getX(), ent.getPos().y - position.getY(), ent.getPos().z - position.getZ()).normalize();
-                    //FireballEntity projectileEntity = new FireballEntity(world, world.getClosestPlayer(position.getX(), position.getY(), position.getZ(), 200, false), dir.x, dir.y, dir.z, 1);
-                    //world.spawnEntity(projectileEntity);
+                    Vec3d pos = new Vec3d(position.getX(), position.getY(), position.getZ());
+                    ent.damage(world.getDamageSources().indirectMagic(world.getClosestPlayer(ent, 200), world.getClosestPlayer(ent, 200)), 3);
+                    ((ServerWorld) world).spawnParticles(ParticleTypes.ELECTRIC_SPARK, ent.getX(), ent.getY(), ent.getZ(), 1, 0, 0, 0, 1);
                 }
             }
         }
