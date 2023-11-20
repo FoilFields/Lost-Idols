@@ -9,12 +9,12 @@
     "description": {
       "translate": "advancements.lost_idols.use_moai_idol.description"
     },
+    "background": "lost_idols:textures/gui/advancements/backgrounds/lost_idols.png",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": true
   },
-  "parent": "minecraft:husbandry/root",
   "criteria": {
     "use_moai_idol": {
       "trigger": "minecraft:item_used_on_block",

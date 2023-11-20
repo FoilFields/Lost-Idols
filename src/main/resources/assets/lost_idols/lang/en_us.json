@@ -4,6 +4,6 @@
   "block.lost_idols.moai_idol": "Moai Idol",
   "block.lost_idols.bird_idol": "Bird Idol",
   "block.lost_idols.jungle_idol": "Jungle Idol",
-  "advancements.lost_idols.use_moai_idol.title": "Egg Head!",
-  "advancements.lost_idols.use_moai_idol.description": "You found a Moai idol"
+  "advancements.lost_idols.use_moai_idol.title": "Lost Idols",
+  "advancements.lost_idols.use_moai_idol.description": "Interact with a Moai idol"
 }
