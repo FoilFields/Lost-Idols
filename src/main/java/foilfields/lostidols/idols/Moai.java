@@ -3,28 +3,35 @@ package foilfields.lostidols.idols;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Position;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class Moai extends AbstractIdol {
+    public static final BooleanProperty POWERED = Properties.POWERED;
+
     public Moai(Settings settings) {
         super(settings);
+
+        this.setDefaultState(this.getDefaultState().with(POWERED, false));
     }
 
     @Override
@@ -33,16 +40,25 @@ public class Moai extends AbstractIdol {
     }
 
     @Override
+    @Nullable
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        return super.getPlacementState(ctx).with(POWERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos()));
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(POWERED);
+    }
+
+    @Override
     public boolean hasRandomTicks(BlockState state) {
         return true;
     }
 
     public void spit(World world, BlockState state, BlockPos pos) {
-        if (!world.isClient && state.get(CHARGED)) {
-            world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
-            world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
-            world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.75f, pos.getZ() + 0.5f, new ItemStack(Items.EGG)));
-        }
+        world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
+        world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.75f, pos.getZ() + 0.5f, new ItemStack(Items.EGG)));
     }
 
     @Override
@@ -57,15 +73,25 @@ public class Moai extends AbstractIdol {
 
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        spit(world, state, pos);
+        if (!world.isClient && state.get(CHARGED)) {
+            spit(world, state, pos);
+        }
+
         super.onBreak(world, pos, state, player);
     }
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean redstoned = world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.up());
-        if (redstoned && state.get(CHARGED)) {
-            spit(world, state, pos);
+        boolean powered = world.isReceivingRedstonePower(pos);
+        boolean charged = state.get(CHARGED);
+        if (powered != state.get(POWERED) && !world.isClient) {
+            if (powered && charged) {
+                world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
+                world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.75f, pos.getZ() + 0.5f, new ItemStack(Items.EGG)));
+                charged = false;
+            }
+
+            world.setBlockState(pos, state.with(POWERED, powered).with(CHARGED, charged));
         }
     }
 
@@ -76,8 +102,10 @@ public class Moai extends AbstractIdol {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        spit(world, state, pos);
-
+        if (!world.isClient && state.get(CHARGED)) {
+            spit(world, state, pos);
+            world.setBlockState(pos, state.with(CHARGED, false));
+        }
 
         return ActionResult.SUCCESS;
     }
