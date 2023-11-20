@@ -42,13 +42,13 @@ public class Moai extends AbstractIdol {
 
         if (!world.isClient && !state.get(CHARGED)) {
             world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
-            world.playSound(null, pos, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.BLOCKS);
+            world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_PLACE, SoundCategory.BLOCKS);
         }
     }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.cuboid(0.2f, 0f, 0.2f, 0.8f, 1.0f, 0.8f);
+        return VoxelShapes.cuboid(0.25f, 0f, 0.25f, 0.75f, 1.0f, 0.75f);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Moai extends AbstractIdol {
         if (!world.isClient && state.get(CHARGED)) {
             world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
             world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
-            world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.EGG)));
+            world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.75f, pos.getZ() + 0.5f, new ItemStack(Items.EGG)));
         }
 
         return ActionResult.SUCCESS;
