@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "item": "lost_idols:moai_idol"
+    },
+    "title": {
+      "translate": "advancements.lost_idols.use_moai_idol.title"
+    },
+    "description": {
+      "translate": "advancements.lost_idols.use_moai_idol.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "minecraft:husbandry/root",
+  "criteria": {
+    "use_moai_idol": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "lost_idols:moai_idol",
+            "properties": {}
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "use_moai_idol"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
