@@ -15,6 +15,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Position;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -36,13 +37,35 @@ public class Moai extends AbstractIdol {
         return true;
     }
 
+    public void spit(World world, BlockState state, BlockPos pos) {
+        if (!world.isClient && state.get(CHARGED)) {
+            world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
+            world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
+            world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.75f, pos.getZ() + 0.5f, new ItemStack(Items.EGG)));
+        }
+    }
+
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        super.randomTick(state, world, pos, random);
-
         if (!world.isClient && !state.get(CHARGED)) {
             world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
             world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_PLACE, SoundCategory.BLOCKS);
+        }
+
+        super.randomTick(state, world, pos, random);
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        spit(world, state, pos);
+        super.onBreak(world, pos, state, player);
+    }
+
+    @Override
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        boolean redstoned = world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.up());
+        if (redstoned && state.get(CHARGED)) {
+            spit(world, state, pos);
         }
     }
 
@@ -53,11 +76,8 @@ public class Moai extends AbstractIdol {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient && state.get(CHARGED)) {
-            world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
-            world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
-            world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.75f, pos.getZ() + 0.5f, new ItemStack(Items.EGG)));
-        }
+        spit(world, state, pos);
+
 
         return ActionResult.SUCCESS;
     }
