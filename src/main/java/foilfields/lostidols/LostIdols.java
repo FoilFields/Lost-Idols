@@ -5,6 +5,7 @@ import foilfields.lostidols.idols.Bird;
 import foilfields.lostidols.idols.Jungle;
 import foilfields.lostidols.idols.Moai;
 import foilfields.lostidols.idols.Sphinx;
+import init.Features;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -17,10 +18,7 @@ import net.minecraft.block.enums.Instrument;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -40,6 +38,8 @@ public class LostIdols implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        Features.init();
+
         Registry.register(Registries.ITEM_GROUP, ITEM_GROUP, FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.lost_idols.lost_idols"))
                 .icon(() -> new ItemStack(MOAI_IDOL))
