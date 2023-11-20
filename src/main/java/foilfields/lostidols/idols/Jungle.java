@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
@@ -36,7 +37,14 @@ public class Jungle extends AbstractIdol {
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
         if (state.get(CHARGED)) {
+            Box area = new Box(new Vec3d(position.getX() - 10, position.getY() - 10, position.getZ() - 10), new Vec3d(position.getX() + 10, position.getY() + 10, position.getZ() + 10));
+            List<Entity> entities = world.getOtherEntities(null, area);
 
+            for(Entity ent: entities){
+                if(ent instanceof MobEntity){
+                    ((MobEntity) ent).getNavigation().startMovingTo(position.getX(), position.getY(), position.getZ(), 1);
+                }
+            }
         }
     }
 
@@ -53,7 +61,7 @@ public class Jungle extends AbstractIdol {
             Vec3d dir = new Vec3d(player.getPos().x - pos.getX(), 2, player.getPos().z - pos.getZ()).normalize();
             player.velocityModified = true;
             player.setVelocity(dir);
-            ((ServerWorld) world).spawnParticles(ParticleTypes.ELECTRIC_SPARK, pos.getX(), pos.getY(), pos.getZ(), 20, 0, 1.5, 0, 0.5);
+            ((ServerWorld) world).spawnParticles(ParticleTypes.ELECTRIC_SPARK, pos.getX(), pos.getY(), pos.getZ(), 20, 0.5, 1.5, 0.5, 0.5);
         }
         return ActionResult.SUCCESS;
     }
