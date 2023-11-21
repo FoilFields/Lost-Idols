@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -17,7 +18,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -56,8 +57,16 @@ public class Moai extends AbstractIdol {
         return true;
     }
 
-    public void spit(World world, BlockState state, BlockPos pos) {
+    public void spit(World world, BlockPos pos) {
         world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
+
+        Vec3i direction = world.getBlockState(pos).get(FACING).getVector();
+        
+        Vec3d spitPos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+        spitPos.add(0.5f, 0.5f, 0.5f); // Offset to center
+        spitPos.add(direction.getX() / 2.0f, direction.getY() / 2.0f, direction.getZ() / 2.0f);
+
+        ((ServerWorld) world).spawnParticles(ParticleTypes.SPIT, spitPos.getX(), spitPos.getY(), spitPos.getZ(), 1, 0, 0, 0, 0);
         world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.75f, pos.getZ() + 0.5f, new ItemStack(Items.EGG)));
     }
 
@@ -74,7 +83,7 @@ public class Moai extends AbstractIdol {
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!world.isClient && state.get(CHARGED)) {
-            spit(world, state, pos);
+            spit(world, pos);
         }
 
         super.onBreak(world, pos, state, player);
@@ -86,8 +95,7 @@ public class Moai extends AbstractIdol {
         boolean charged = state.get(CHARGED);
         if (powered != state.get(POWERED) && !world.isClient) {
             if (powered && charged) {
-                world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
-                world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.75f, pos.getZ() + 0.5f, new ItemStack(Items.EGG)));
+                spit(world, pos);
                 charged = false;
             }
 
@@ -103,7 +111,7 @@ public class Moai extends AbstractIdol {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient && state.get(CHARGED)) {
-            spit(world, state, pos);
+            spit(world, pos);
             world.setBlockState(pos, state.with(CHARGED, false));
         }
 
