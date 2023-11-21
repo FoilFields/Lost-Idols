@@ -61,13 +61,16 @@ public class Moai extends AbstractIdol {
         world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
 
         Vec3i direction = world.getBlockState(pos).get(FACING).getVector();
-        
-        Vec3d spitPos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-        spitPos.add(0.5f, 0.5f, 0.5f); // Offset to center
-        spitPos.add(direction.getX() / 2.0f, direction.getY() / 2.0f, direction.getZ() / 2.0f);
+
+        Vec3d spitPos = new Vec3d(pos.getX(), pos.getY(), pos.getZ())
+                .add(0.5f, 0.5f, 0.5f)
+                .add(direction.getX() / 2.0f, direction.getY() / 2.0f, direction.getZ() / 2.0f);
 
         ((ServerWorld) world).spawnParticles(ParticleTypes.SPIT, spitPos.getX(), spitPos.getY(), spitPos.getZ(), 1, 0, 0, 0, 0);
-        world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.75f, pos.getZ() + 0.5f, new ItemStack(Items.EGG)));
+
+        ItemEntity itemEntity = new ItemEntity(world, spitPos.getX(), spitPos.getY(), spitPos.getZ(), new ItemStack(Items.EGG));
+        itemEntity.setVelocity(direction.getX() / 3.0f, world.random.nextTriangular(0.2D, 0.05D), direction.getZ() / 3.0f);
+        world.spawnEntity(itemEntity);
     }
 
     @Override
