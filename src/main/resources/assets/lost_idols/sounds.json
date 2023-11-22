@@ -1,0 +1,18 @@
+{
+  "moai_spit": {
+    "subtitle": "subtitles.lost_idols.moai_spit",
+    "sounds": [
+      "lost_idols:moai_spit_1",
+      "lost_idols:moai_spit_2",
+      "lost_idols:moai_spit_3"
+    ]
+  },
+  "moai_grow": {
+    "subtitle": "subtitles.lost_idols.moai_grow",
+    "sounds": [
+      "lost_idols:moai_grow_1",
+      "lost_idols:moai_grow_2"
+    ]
+  }
+}
+

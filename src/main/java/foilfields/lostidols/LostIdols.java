@@ -5,7 +5,7 @@ import foilfields.lostidols.idols.Bird;
 import foilfields.lostidols.idols.Jungle;
 import foilfields.lostidols.idols.Moai;
 import foilfields.lostidols.idols.Sphinx;
-import init.Features;
+import foilfields.lostidols.init.Features;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;

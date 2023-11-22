@@ -1,4 +1,4 @@
-package init;
+package foilfields.lostidols.init;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;

@@ -1,5 +1,6 @@
 package foilfields.lostidols.idols;
 
+import foilfields.lostidols.init.Sounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -58,7 +59,7 @@ public class Moai extends AbstractIdol {
     }
 
     public void spit(World world, BlockPos pos) {
-        world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_HATCH, SoundCategory.BLOCKS);
+        world.playSound(null, pos, Sounds.MOAI_SPIT_EVENT, SoundCategory.BLOCKS);
 
         Vec3i direction = world.getBlockState(pos).get(FACING).getVector();
 
@@ -77,7 +78,7 @@ public class Moai extends AbstractIdol {
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!world.isClient && !state.get(CHARGED)) {
             world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
-            world.playSound(null, pos, SoundEvents.BLOCK_FROGSPAWN_PLACE, SoundCategory.BLOCKS);
+            world.playSound(null, pos, Sounds.MOAI_GROW_EVENT, SoundCategory.BLOCKS);
         }
 
         super.randomTick(state, world, pos, random);
