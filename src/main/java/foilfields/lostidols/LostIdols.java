@@ -6,6 +6,8 @@ import foilfields.lostidols.idols.Jungle;
 import foilfields.lostidols.idols.Moai;
 import foilfields.lostidols.idols.Sphinx;
 import foilfields.lostidols.init.Features;
+import foilfields.lostidols.init.Sounds;
+import foilfields.lostidols.init.Statistics;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -39,6 +41,8 @@ public class LostIdols implements ModInitializer {
     @Override
     public void onInitialize() {
         Features.init();
+        Sounds.init();
+        Statistics.init();
 
         Registry.register(Registries.ITEM_GROUP, ITEM_GROUP, FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.lost_idols.lost_idols"))

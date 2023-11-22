@@ -1,6 +1,7 @@
 package foilfields.lostidols.idols;
 
 import foilfields.lostidols.init.Sounds;
+import foilfields.lostidols.init.Statistics;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -88,6 +89,7 @@ public class Moai extends AbstractIdol {
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!world.isClient && state.get(CHARGED)) {
             spit(world, pos);
+            player.incrementStat(Statistics.POP_MOAI_IDOL);
         }
 
         super.onBreak(world, pos, state, player);
@@ -117,6 +119,7 @@ public class Moai extends AbstractIdol {
         if (!world.isClient && state.get(CHARGED)) {
             spit(world, pos);
             world.setBlockState(pos, state.with(CHARGED, false));
+            player.incrementStat(Statistics.POP_MOAI_IDOL);
         }
 
         return ActionResult.SUCCESS;
