@@ -27,37 +27,78 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Moai Idol is a block that grows an egg, which can be removed by destroying, interaction and redstone.
+ */
 public class Moai extends AbstractIdol {
+    /**
+     * Boolean property indicating whether the Moai block is powered.
+     */
     public static final BooleanProperty POWERED = Properties.POWERED;
 
+    /**
+     * Constructs a Moai block with the given settings.
+     *
+     * @param settings The settings for the Moai block.
+     */
     public Moai(Settings settings) {
         super(settings);
 
         this.setDefaultState(this.getDefaultState().with(POWERED, false));
     }
 
+    /**
+     * Called every game tick on the client and server side.
+     *
+     * @param state    The current state of the Moai block.
+     * @param world    The world where the Moai block exists.
+     * @param position The position of the Moai block in the world.
+     */
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
-
+        // Ignore
     }
 
+    /**
+     * Gets the block state to be set when the Moai block is placed.
+     *
+     * @param ctx The context of the item placement.
+     * @return The block state to be set when placing the Moai block.
+     */
     @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return super.getPlacementState(ctx).with(POWERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos()));
     }
 
+    /**
+     * Appends additional properties to the state manager for the Moai block.
+     *
+     * @param builder The state manager builder for the Moai block.
+     */
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(POWERED);
     }
 
+    /**
+     * Returns whether the Moai block has random ticks.
+     *
+     * @param state The current state of the Moai block.
+     * @return True.
+     */
     @Override
     public boolean hasRandomTicks(BlockState state) {
         return true;
     }
 
+    /**
+     * Plays a sound and spawns particles and an item entity.
+     *
+     * @param world The world where the Moai block exists.
+     * @param pos   The position of the Moai block in the world.
+     */
     public void spit(World world, BlockPos pos) {
         world.playSound(null, pos, Sounds.MOAI_SPIT_EVENT, SoundCategory.BLOCKS);
 
@@ -74,6 +115,14 @@ public class Moai extends AbstractIdol {
         world.spawnEntity(itemEntity);
     }
 
+    /**
+     * Handles random ticks for the Moai block. Causes the Moai to grow an egg.
+     *
+     * @param state  The current state of the Moai block.
+     * @param world  The world where the Moai block exists.
+     * @param pos    The position of the Moai block in the world.
+     * @param random A random number generator.
+     */
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!world.isClient && !state.get(CHARGED)) {
@@ -84,6 +133,14 @@ public class Moai extends AbstractIdol {
         super.randomTick(state, world, pos, random);
     }
 
+    /**
+     * Handles actions when the Moai block is broken. Spits out an egg if needed when broken.
+     *
+     * @param world  The world where the Moai block exists.
+     * @param pos    The position of the Moai block in the world.
+     * @param state  The current state of the Moai block.
+     * @param player The player who broke the Moai block.
+     */
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!world.isClient && state.get(CHARGED)) {
@@ -94,6 +151,16 @@ public class Moai extends AbstractIdol {
         super.onBreak(world, pos, state, player);
     }
 
+    /**
+     * Handles neighbor updates for the Moai block. Specifically handles redstone powering.
+     *
+     * @param state       The current state of the Moai block.
+     * @param world       The world where the Moai block exists.
+     * @param pos         The position of the Moai block in the world.
+     * @param sourceBlock The neighbor block that triggered the update.
+     * @param sourcePos   The position of the neighbor block that triggered the update.
+     * @param notify      Whether to notify neighbors of the update.
+     */
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         boolean powered = world.isReceivingRedstonePower(pos);
@@ -108,11 +175,31 @@ public class Moai extends AbstractIdol {
         }
     }
 
+    /**
+     * Gets the outline shape of the Moai block.
+     *
+     * @param state   The current state of the Moai block.
+     * @param view    The view of the Moai block.
+     * @param pos     The position of the Moai block in the world.
+     * @param context The shape context for the Moai block.
+     * @return The outline shape of the Moai block.
+     */
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
         return VoxelShapes.cuboid(0.25f, 0f, 0.25f, 0.75f, 1.0f, 0.75f);
     }
 
+    /**
+     * Handles actions when the Moai block is used. Spits the egg if
+     *
+     * @param state  The current state of the Moai block.
+     * @param world  The world where the Moai block exists.
+     * @param pos    The position of the Moai block in the world.
+     * @param player The player using the Moai block.
+     * @param hand   The hand used to activate the Moai block.
+     * @param hit    The hit result of the activation.
+     * @return The result of the Moai block activation.
+     */
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient && state.get(CHARGED)) {
