@@ -11,9 +11,9 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 import static foilfields.lostidols.LostIdols.GetIdentifier;
 
 public class Features {
-    public static final RegistryKey<PlacedFeature> DISK_FEATURE = RegistryKey.of(RegistryKeys.PLACED_FEATURE, GetIdentifier("moai_beach"));
+    public static final RegistryKey<PlacedFeature> MOAI_BEACH = RegistryKey.of(RegistryKeys.PLACED_FEATURE, GetIdentifier("moai_beach"));
 
     public static void init() {
-        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_BEACH), GenerationStep.Feature.VEGETAL_DECORATION, DISK_FEATURE);
+        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_BEACH), GenerationStep.Feature.VEGETAL_DECORATION, MOAI_BEACH);
     }
 }
