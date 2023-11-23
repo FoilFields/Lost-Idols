@@ -54,7 +54,7 @@ public abstract class AbstractIdol extends BlockWithEntity implements BlockEntit
     @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(CHARGED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos())).with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        return this.getDefaultState().with(CHARGED, false).with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
     }
 
     @Override
