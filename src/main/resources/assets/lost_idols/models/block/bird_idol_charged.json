@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "lost_idols:block/bird_idol",
-		"particle": "lost_idols:block/bird_idol"
+		"0": "lost_idols:block/bird_idol_charged",
+		"particle": "lost_idols:block/bird_idol_charged"
 	},
 	"elements": [
 		{

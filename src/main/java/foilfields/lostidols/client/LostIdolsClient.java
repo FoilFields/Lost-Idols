@@ -11,8 +11,5 @@ import net.minecraft.client.render.RenderLayer;
 public class LostIdolsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        // Set the render layer for each ray block to translucent.
-        BlockRenderLayerMap.INSTANCE.putBlock(LostIdols.SPHINX_IDOL, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(LostIdols.BIRD_IDOL, RenderLayer.getTranslucent());
     }
 }

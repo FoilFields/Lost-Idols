@@ -23,6 +23,7 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
@@ -90,12 +91,12 @@ public class Bird extends AbstractIdol implements LandingBlock {
 
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
-        if (state.get(CHARGED) && !world.isClient){
+        if (state.get(CHARGED) && !world.isClient) {
             Box area = new Box(new Vec3d(position.getX() - 50, position.getY() - 50, position.getZ() - 50), new Vec3d(position.getX() + 50, position.getY() + 50, position.getZ() + 50));
             List<Entity> entities = world.getOtherEntities(null, area);
 
-            for(Entity ent: entities){
-                if(ent.getType().equals(EntityType.PHANTOM)){
+            for (Entity ent : entities) {
+                if (ent.getType().equals(EntityType.PHANTOM)) {
                     Vec3d dir = new Vec3d(ent.getPos().x - position.getX(), ent.getPos().y - position.getY(), ent.getPos().z - position.getZ()).normalize();
                     Vec3d pos = new Vec3d(position.getX(), position.getY(), position.getZ());
                     ent.damage(world.getDamageSources().indirectMagic(world.getClosestPlayer(ent, 200), world.getClosestPlayer(ent, 200)), 3);
@@ -108,6 +109,6 @@ public class Bird extends AbstractIdol implements LandingBlock {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.cuboid(0.3f, 0f, 0.3f, 0.7f, 1.0f, 0.7f);
+        return VoxelShapes.combineAndSimplify(createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 3.0D, 15.0D), createCuboidShape(2.0D, 3.0D, 2.0D, 14.0D, 16.0D, 14.0D), BooleanBiFunction.OR);
     }
 }
