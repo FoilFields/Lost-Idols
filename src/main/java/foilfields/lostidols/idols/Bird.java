@@ -124,17 +124,17 @@ public class Bird extends AbstractIdol implements LandingBlock {
                         phantomEntity.damage(world.getDamageSources().indirectMagic(playerEntity, playerEntity), 3);
                         world.playSound(null, phantomEntity.getBlockPos(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.BLOCKS);
                         ((ServerWorld) world).spawnParticles(ParticleTypes.SWEEP_ATTACK, entity.getX(), entity.getY(), entity.getZ(), 1, 0, 0, 0, 0);
+                    }
 
-                        // Beam to entity
-                        Vec3d sourcePosition = position.toCenterPos();
-                        Vec3d difference = phantomEntity.getPos().subtract(sourcePosition);
-                        int iterations = MathHelper.clamp((int) difference.length(), 1, 30);
-                        Random random = Random.create();
-                        for (int i = 0; i < iterations; i++) {
-                            double proportion = random.nextDouble();
-                            Vec3d particlePosition = sourcePosition.add(difference.multiply(proportion));
-                            ((ServerWorld) world).spawnParticles(Particles.PHANTOM_RAY, particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0, 0, 0, 0);
-                        }
+                    // Beam to entity
+                    Vec3d sourcePosition = position.toCenterPos();
+                    Vec3d difference = phantomEntity.getPos().subtract(sourcePosition);
+                    int iterations = MathHelper.clamp((int) difference.length() / 10, 1, 3);
+                    Random random = Random.create();
+                    for (int i = 0; i < iterations; i++) {
+                        double proportion = random.nextDouble();
+                        Vec3d particlePosition = sourcePosition.add(difference.multiply(proportion));
+                        ((ServerWorld) world).spawnParticles(Particles.PHANTOM_RAY, particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0, 0, 0, 0);
                     }
                 }
             }
