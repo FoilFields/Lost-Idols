@@ -61,7 +61,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 5,
           "name": "minecraft:oak_boat"
         }
       ]
