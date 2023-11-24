@@ -1,0 +1,43 @@
+{
+  "display": {
+    "icon": {
+      "item": "lost_idols:bird_idol",
+      "nbt": "{Enabled:true}"
+    },
+    "title": {
+      "translate": "advancements.lost_idols.find_bird_island.title"
+    },
+    "description": {
+      "translate": "advancements.lost_idols.find_bird_island.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "lost_idols:lost_idols_root",
+  "criteria": {
+    "fortress": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "lost_idols:bird_island"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "fortress"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
