@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "lost_idols:bird_island",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1105692442,
+    "spacing": 64,
+    "separation": 8
+  }
+}
