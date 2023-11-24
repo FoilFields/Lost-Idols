@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "lost_idols:bird_idol",
-      "nbt": "{Enabled:true}"
+      "item": "lost_idols:bird_idol"
     },
     "title": {
       "translate": "advancements.lost_idols.find_bird_island.title"
