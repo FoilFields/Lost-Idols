@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "enabled=false,facing=north": {
+      "model": "lost_idols:block/promise_idol",
+      "y": 0
+    },
+    "enabled=false,facing=east": {
+      "model": "lost_idols:block/promise_idol",
+      "y": 90
+    },
+    "enabled=false,facing=south": {
+      "model": "lost_idols:block/promise_idol",
+      "y": 180
+    },
+    "enabled=false,facing=west": {
+      "model": "lost_idols:block/promise_idol",
+      "y": 270
+    },
+    "enabled=true,facing=north": {
+      "model": "lost_idols:block/promise_idol_charged",
+      "y": 0
+    },
+    "enabled=true,facing=east": {
+      "model": "lost_idols:block/promise_idol_charged",
+      "y": 90
+    },
+    "enabled=true,facing=south": {
+      "model": "lost_idols:block/promise_idol_charged",
+      "y": 180
+    },
+    "enabled=true,facing=west": {
+      "model": "lost_idols:block/promise_idol_charged",
+      "y": 270
+    }
+  }
+}
