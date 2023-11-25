@@ -27,7 +27,7 @@ public class LostIdols implements ModInitializer {
     public static final Moai MOAI_IDOL = new Moai(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
     public static final Bird BIRD_IDOL = new Bird(AbstractBlock.Settings.create().mapColor(MapColor.DEEPSLATE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
     public static final Jungle JUNGLE_IDOL = new Jungle(AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
-    public static final Sphinx PROMISE_IDOL = new Sphinx(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F).luminance((state) -> !state.get(Promise.CHARGED) ? 0 : 15));
+    public static final Promise PROMISE_IDOL = new Promise(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F).luminance((state) -> !state.get(Promise.CHARGED) ? 0 : 15));
 
     public static final RegistryKey<ItemGroup> ITEM_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, GetIdentifier("lost_idols_group"));
 
