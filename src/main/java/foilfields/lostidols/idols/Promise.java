@@ -1,15 +1,13 @@
 package foilfields.lostidols.idols;
 
+import foilfields.lostidols.init.Particles;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
@@ -20,9 +18,9 @@ public class Promise extends AbstractIdol {
 
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
-        if (state.get(CHARGED) && !world.isClient) {
+        if (state.get(CHARGED) && !world.isClient && Math.random() < 0.1f) {
             Vec3d particlePosition = position.toCenterPos();
-            ((ServerWorld) world).spawnParticles(ParticleTypes.TOTEM_OF_UNDYING, particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 10, 5, 10, 0.1);
+            ((ServerWorld) world).spawnParticles(Particles.FIREFLY, particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 5, 2, 5, 0.01);
         }
     }
 
