@@ -8,6 +8,8 @@
   "block.lost_idols.bird_idol": "Bird Idol",
   "block.lost_idols.jungle_idol": "Jungle Idol",
   "stat.lost_idols.pop_moai_idol": "Eggs taken from Moai Idols",
+  "advancements.lost_idols.alchemist_hut.title": "One Thief One Trespass",
+  "advancements.lost_idols.alchemist_hut.description": "Find the alchemist hut",
   "advancements.lost_idols.use_moai_idol.title": "Lost Idols",
   "advancements.lost_idols.use_moai_idol.description": "Interact with a Moai idol",
   "advancements.lost_idols.find_bird_island.title": "Look Up!",
