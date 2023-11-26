@@ -15,10 +15,12 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.*;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -27,7 +29,7 @@ public class LostIdols implements ModInitializer {
     public static final Moai MOAI_IDOL = new Moai(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
     public static final Bird BIRD_IDOL = new Bird(AbstractBlock.Settings.create().mapColor(MapColor.DEEPSLATE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
     public static final Jungle JUNGLE_IDOL = new Jungle(AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
-    public static final Promise PROMISE_IDOL = new Promise(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F).luminance((state) -> !state.get(Promise.CHARGED) ? 0 : 15));
+    public static final Promise PROMISE_IDOL = new Promise(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_GRAY).instrument(Instrument.COW_BELL).strength(0.3F).luminance((state) -> !state.get(Promise.CHARGED) ? 0 : 15).pistonBehavior(PistonBehavior.DESTROY).sounds(BlockSoundGroup.GLASS));
 
     public static final RegistryKey<ItemGroup> ITEM_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, GetIdentifier("lost_idols_group"));
 
