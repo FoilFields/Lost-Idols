@@ -12,6 +12,12 @@
       "lost_idols:moai_grow_1",
       "lost_idols:moai_grow_2"
     ]
+  },
+  "promise_charge": {
+    "subtitle": "subtitles.lost_idols.promise_charge",
+    "sounds": [
+      "lost_idols:promise_charge"
+    ]
   }
 }
 
