@@ -21,9 +21,9 @@ public class FireflyParticle extends SpriteBillboardParticle {
         this.velocityX += velocityX;
         this.velocityY += velocityY;
         this.velocityZ += velocityZ;
-        this.red = 1F;
-        this.green = 1F;
-        this.blue = 1F;
+        this.red = 2F;
+        this.green = 2F;
+        this.blue = 2F;
         this.scale *= 1.875F;
         int i = (int)(8.0 / (Math.random() * 0.8 + 0.3));
         this.maxAge = (int)Math.max((float)i * 15F, 3.0F);
