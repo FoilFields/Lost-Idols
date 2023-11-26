@@ -6,7 +6,7 @@
   ],
   "textures": {
     "1": "lost_idols:block/moai_idol",
-    "particle": "lost_idols:block/moai_idol"
+    "particle": "minecraft:block/chiseled_stone_bricks"
   },
   "elements": [
     {
