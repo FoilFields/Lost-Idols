@@ -19,6 +19,7 @@ import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
@@ -60,7 +61,7 @@ public class Undying extends AbstractIdol {
                                 9,
                                 0,
                                 false,
-                                false
+                                true
                         ));
                 }
             }
@@ -75,7 +76,7 @@ public class Undying extends AbstractIdol {
                         createCuboidShape(5.0D, 9.0D, 5.0D, 11.0D, 16.0D, 11.0D),
                         BooleanBiFunction.OR
                 ),
-                createCuboidShape(5.0D, 2.0D, 6.0D, 10.0D, 10.0D, 10.0D),
+                state.get(FACING) == Direction.SOUTH || state.get(FACING) == Direction.NORTH ? createCuboidShape(5.5D, 2.0D, 6.0D, 10.5D, 10.0D, 10.0D) : createCuboidShape(6.0D, 2.0D, 5.5D, 10.0D, 10.0D, 10.5D),
                 BooleanBiFunction.OR
         );
     }
