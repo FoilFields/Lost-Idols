@@ -1,5 +1,6 @@
 package foilfields.lostidols.idols;
 
+import foilfields.lostidols.init.Particles;
 import foilfields.lostidols.init.StatusEffects;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -47,7 +48,7 @@ public class Undying extends AbstractIdol {
                 particlePosition = particlePosition.rotateX(random.nextFloat() * 180f);
                 particlePosition = particlePosition.add(center);
 
-                ((ServerWorld) world).spawnParticles(ParticleTypes.TOTEM_OF_UNDYING, particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0, 0, 0, 0);
+                ((ServerWorld) world).spawnParticles(Particles.UNDYING, particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0, 0, 0, 0);
             }
 
             Box area = new Box(new Vec3d(position.getX() - 20, position.getY() - 20, position.getZ() - 20), new Vec3d(position.getX() + 20, position.getY() + 20, position.getZ() + 20));

@@ -1,5 +1,6 @@
 package foilfields.lostidols.mixin;
 
+import foilfields.lostidols.init.Particles;
 import foilfields.lostidols.init.Statistics;
 import foilfields.lostidols.init.StatusEffects;
 import net.minecraft.advancement.criterion.Criteria;
@@ -63,7 +64,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable {
 
                 Vec3d position = this.getPos();
                 if (!getWorld().isClient) {
-                    ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.TOTEM_OF_UNDYING, position.getX(), position.getY(), position.getZ(), 10, 0, 0, 0, 0.1);
+                    ((ServerWorld) getWorld()).spawnParticles(Particles.UNDYING, position.getX(), position.getY(), position.getZ(), 20, 0.1, 0.1, 0.1, 1.0F);
                     getWorld().playSound(null, position.getX(), position.getY(), position.getZ(), UNDYING_ACTIVATE, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 }
                 cir.setReturnValue(true);
