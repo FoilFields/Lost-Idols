@@ -62,7 +62,7 @@ public class Undying extends AbstractIdol {
                                 9,
                                 0,
                                 true,
-                                false
+                                true
                         ));
                 }
             }
