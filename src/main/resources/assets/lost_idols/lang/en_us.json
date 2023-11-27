@@ -11,6 +11,7 @@
   "block.lost_idols.jungle_idol": "Jungle Idol",
   "block.lost_idols.undying_idol": "Undying Idol",
   "stat.lost_idols.pop_moai_idol": "Eggs taken from Moai Idols",
+  "stat.lost_idols.undying_idol_saves": "Times saved by Undying Idols",
   "effect.lost_idols.undying": "Undying",
   "advancements.lost_idols.alchemist_hut.title": "One Thief One Trespass",
   "advancements.lost_idols.alchemist_hut.description": "Find the alchemist hut",

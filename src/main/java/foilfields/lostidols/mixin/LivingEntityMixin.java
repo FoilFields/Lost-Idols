@@ -1,6 +1,8 @@
 package foilfields.lostidols.mixin;
 
+import foilfields.lostidols.init.Statistics;
 import foilfields.lostidols.init.StatusEffects;
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.Attackable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -8,8 +10,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.Items;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.stat.Stats;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -35,6 +41,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable {
     private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
         if (!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY) && !cir.getReturnValue()) {
             StatusEffectInstance statusEffectInstance = this.getStatusEffect(StatusEffects.UNDYING);
+
+            if (((LivingEntity)(Object)this) instanceof ServerPlayerEntity) {
+                ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)(Object)this;
+                serverPlayerEntity.incrementStat(Statistics.UNDYING_IDOL);
+            }
 
             if (statusEffectInstance != null) {
                 this.setHealth(1.0F);
