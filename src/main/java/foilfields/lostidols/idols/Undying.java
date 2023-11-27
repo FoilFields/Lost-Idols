@@ -60,8 +60,8 @@ public class Undying extends AbstractIdol {
                                 StatusEffects.UNDYING,
                                 9,
                                 0,
-                                false,
-                                true
+                                true,
+                                false
                         ));
                 }
             }
