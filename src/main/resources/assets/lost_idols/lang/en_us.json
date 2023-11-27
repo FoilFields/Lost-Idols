@@ -19,5 +19,7 @@
   "advancements.lost_idols.use_moai_idol.title": "Lost Idols",
   "advancements.lost_idols.use_moai_idol.description": "Interact with a Moai idol",
   "advancements.lost_idols.find_bird_island.title": "Look Up!",
-  "advancements.lost_idols.find_bird_island.description": "Find a bird island"
+  "advancements.lost_idols.find_bird_island.description": "Find a bird island",
+  "advancements.lost_idols.undying.title": "Immortal!",
+  "advancements.lost_idols.undying.description": "Obtain the undying effect"
 }

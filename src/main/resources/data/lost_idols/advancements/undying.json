@@ -1,0 +1,34 @@
+{
+  "display": {
+    "icon": {
+      "item": "lost_idols:undying_idol"
+    },
+    "title": {
+      "translate": "advancements.lost_idols.undying.title"
+    },
+    "description": {
+      "translate": "advancements.lost_idols.undying.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "lost_idols:lost_idols_root",
+  "criteria": {
+    "undying": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "lost_idols:undying": {}
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "undying"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
