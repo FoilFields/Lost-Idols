@@ -11,9 +11,13 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
@@ -22,6 +26,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import static foilfields.lostidols.init.Sounds.UNDYING_ACTIVATE;
+import static foilfields.lostidols.init.Sounds.UNDYING_CHARGE;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable {
@@ -53,6 +60,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable {
                 this.addStatusEffect(new StatusEffectInstance(net.minecraft.entity.effect.StatusEffects.REGENERATION, 900, 1));
                 this.addStatusEffect(new StatusEffectInstance(net.minecraft.entity.effect.StatusEffects.ABSORPTION, 100, 1));
                 this.addStatusEffect(new StatusEffectInstance(net.minecraft.entity.effect.StatusEffects.FIRE_RESISTANCE, 800, 0));
+
+                Vec3d position = this.getPos();
+                if (!getWorld().isClient) {
+                    ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.TOTEM_OF_UNDYING, position.getX(), position.getY(), position.getZ(), 10, 0, 0, 0, 0.1);
+                    getWorld().playSound(null, position.getX(), position.getY(), position.getZ(), UNDYING_ACTIVATE, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                }
                 cir.setReturnValue(true);
             }
         }

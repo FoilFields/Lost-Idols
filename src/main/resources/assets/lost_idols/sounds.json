@@ -24,6 +24,12 @@
     "sounds": [
       "lost_idols:undying_charge"
     ]
+  },
+  "undying_activate": {
+    "subtitle": "subtitles.lost_idols.undying_activate",
+    "sounds": [
+      "lost_idols:undying_activate"
+    ]
   }
 }
 

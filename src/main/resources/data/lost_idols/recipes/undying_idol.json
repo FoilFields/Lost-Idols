@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "#X#",
+    "XOX",
+    "XXX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:emerald"
+    },
+    "X": {
+      "item": "minecraft:gold_block"
+    },
+    "O": {
+      "item": "minecraft:totem_of_undying"
+    }
+  },
+  "result": {
+    "item": "lost_idols:undying_idol"
+  }
+}

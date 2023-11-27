@@ -14,7 +14,7 @@ public class Statistics {
 
     public static void init() {
         Registry.register(Registries.CUSTOM_STAT, "pop_moai_idol", POP_MOAI_IDOL);
-        Registry.register(Registries.CUSTOM_STAT, "undying_idol_saves", POP_MOAI_IDOL);
+        Registry.register(Registries.CUSTOM_STAT, "undying_idol_saves", UNDYING_IDOL);
         Stats.CUSTOM.getOrCreateStat(POP_MOAI_IDOL, StatFormatter.DEFAULT);
         Stats.CUSTOM.getOrCreateStat(UNDYING_IDOL, StatFormatter.DEFAULT);
     }
