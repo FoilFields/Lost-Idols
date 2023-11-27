@@ -4,6 +4,7 @@
   "package": "foilfields.lostidols.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "LivingEntityMixin"
   ],
   "client": [
   ],

@@ -18,6 +18,12 @@
     "sounds": [
       "lost_idols:promise_charge"
     ]
+  },
+  "undying_charge": {
+    "subtitle": "subtitles.lost_idols.undying_charge",
+    "sounds": [
+      "lost_idols:undying_charge"
+    ]
   }
 }
 
