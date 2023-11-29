@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -39,19 +40,38 @@ public class Shulker extends AbstractIdol {
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
         if (state.get(CHARGED) && !world.isClient) {
-            // TODO: Particles!
 
             BlockPos columnPos = position.add(0, 1, 0);
             while (!world.isOutOfHeightLimit(columnPos) && !world.getBlockState(columnPos).isSolid()) {
                 columnPos = columnPos.add(0, 1, 0);
             }
 
-            Box area = new Box(new Vec3d(position.getX(), position.getY(), position.getZ()), new Vec3d(columnPos.getX() + 1, columnPos.getY(), columnPos.getZ() + 1));
+            Vec3d lowCorner = new Vec3d(position.getX(), position.getY(), position.getZ());
+            Vec3d highCorner = new Vec3d(columnPos.getX() + 1, columnPos.getY(), columnPos.getZ() + 1);
+
+            Vec3d difference = highCorner.subtract(lowCorner);
+
+            Random random = Random.create();
+
+            // Base
+            for (int i = 0; i < 3; i++) {
+                Vec3d particlePos = lowCorner.add(random.nextFloat(), 0, random.nextFloat());
+                ((ServerWorld) world).spawnParticles(Particles.STREAM, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 1, 0, 0, 0, 0);
+            }
+
+            // Column
+            for (int i = 0; i < difference.getY() / 2; i++) {
+                if (random.nextFloat() < 0.8F) continue;
+                Vec3d particlePos = lowCorner.add(difference.multiply(random.nextFloat(), random.nextFloat(), random.nextFloat()));
+                ((ServerWorld) world).spawnParticles(Particles.STREAM, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 1, 0, 0, 0, 0);
+            }
+
+            Box area = new Box(lowCorner, highCorner);
             List<Entity> entities = world.getOtherEntities(null, area);
 
             for (Entity entity : entities) {
-                if (entity instanceof PlayerEntity) {
-                    ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(
+                if (entity instanceof LivingEntity) {
+                    ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(
                             LEVITATION,
                             2,
                             10,
