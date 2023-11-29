@@ -44,14 +44,15 @@ public class Sphinx extends AbstractIdol {
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
         if (state.get(CHARGED) && !world.isClient) {
-            //world.playSound(null, position, SoundEvents.ENTITY_CAT_PURREOW, SoundCategory.BLOCKS);
             Box area = new Box(new Vec3d(position.getX() - 50, position.getY() - 50, position.getZ() - 50), new Vec3d(position.getX() + 50, position.getY() + 50, position.getZ() + 50));
             List<Entity> entities = world.getOtherEntities(null, area);
 
             for(Entity ent: entities){
                 if(ent instanceof LivingEntity){
+                    if (ent.getPos().distanceTo(position.toCenterPos()) < 50) continue;
+
                     LivingEntity livingEntity = (LivingEntity) ent;
-                    livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 10, 0), null);
+                    livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 10, 5), null);
                 }
             }
         }
@@ -64,7 +65,7 @@ public class Sphinx extends AbstractIdol {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient && player.getStackInHand(hand).getItem().equals(Items.FLINT_AND_STEEL)) {
+        if (!world.isClient && player.getStackInHand(hand).getItem().equals(Items.GOLD_BLOCK)) {
             world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
             world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS);
             Vec3d dir = new Vec3d(player.getPos().x - pos.getX(), 2, player.getPos().z - pos.getZ()).normalize();
