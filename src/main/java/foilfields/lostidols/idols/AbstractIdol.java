@@ -19,6 +19,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import static foilfields.lostidols.init.Blocks.IDOL_BLOCK_ENTITY;
+
 public abstract class AbstractIdol extends BlockWithEntity implements BlockEntityProvider {
     public static final BooleanProperty CHARGED = Properties.ENABLED;
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
@@ -38,7 +40,7 @@ public abstract class AbstractIdol extends BlockWithEntity implements BlockEntit
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, LostIdols.IDOL_BLOCK_ENTITY, IdolBlockEntity::tick);
+        return checkType(type, IDOL_BLOCK_ENTITY, IdolBlockEntity::tick);
     }
 
     @Nullable

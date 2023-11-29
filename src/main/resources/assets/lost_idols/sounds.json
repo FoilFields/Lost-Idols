@@ -30,6 +30,12 @@
     "sounds": [
       "lost_idols:undying_activate"
     ]
+  },
+  "shulker_charge": {
+    "subtitle": "subtitles.lost_idols.shulker_charge",
+    "sounds": [
+      "lost_idols:shulker_charge"
+    ]
   }
 }
 

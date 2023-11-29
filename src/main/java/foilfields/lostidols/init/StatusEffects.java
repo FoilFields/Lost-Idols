@@ -10,6 +10,7 @@ import static foilfields.lostidols.LostIdols.GetIdentifier;
 public class StatusEffects {
     public static final StatusEffect UNDYING = new UndyingEffect();
     public static void init() {
+
         Registry.register(Registries.STATUS_EFFECT, GetIdentifier("undying"), UNDYING);
     }
 }
