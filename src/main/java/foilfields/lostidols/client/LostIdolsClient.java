@@ -1,5 +1,6 @@
 package foilfields.lostidols.client;
 
+import foilfields.lostidols.client.particle.FireflyParticle;
 import foilfields.lostidols.client.particle.StreamParticle;
 import foilfields.lostidols.client.particle.UndyingParticle;
 import foilfields.lostidols.init.Particles;
@@ -20,6 +21,7 @@ public class LostIdolsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(Particles.PHANTOM_RAY, SonicBoomParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(Particles.STREAM, StreamParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(Particles.UNDYING, UndyingParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(Particles.FIREFLY, FireflyParticle.Factory::new);
 
         BlockRenderLayerMap.INSTANCE.putBlock(PROMISE_IDOL, RenderLayer.getTranslucent());
     }
