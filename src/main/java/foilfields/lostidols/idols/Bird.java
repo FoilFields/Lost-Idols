@@ -1,5 +1,6 @@
 package foilfields.lostidols.idols;
 
+import foilfields.lostidols.Utils;
 import foilfields.lostidols.init.Particles;
 import net.minecraft.block.*;
 import net.minecraft.client.util.ParticleUtil;
@@ -60,6 +61,7 @@ public class Bird extends AbstractIdol implements LandingBlock {
 
         BlockStateParticleEffect particleEffect = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState());
         ((ServerWorld) world).spawnParticles(particleEffect, center.getX(), center.getY(), center.getZ(), 10, 0.25, 0.25, 0.25, 0);
+        Utils.ExplodeThrow(center, (ServerWorld) world, 20);
     }
 
     // Sounds for landing and triggers charging if had a fall time of over 35
