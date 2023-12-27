@@ -1,5 +1,6 @@
 package foilfields.lostidols.idols;
 
+import foilfields.lostidols.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -14,6 +15,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
@@ -21,6 +23,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -36,6 +39,8 @@ import org.joml.Vector3d;
 
 import java.util.List;
 
+import static foilfields.lostidols.init.Sounds.UNDYING_CHARGE;
+
 public class Sphinx extends AbstractIdol {
     public Sphinx(Settings settings) {
         super(settings);
@@ -48,10 +53,9 @@ public class Sphinx extends AbstractIdol {
             List<Entity> entities = world.getOtherEntities(null, area);
 
             for(Entity ent: entities){
-                if(ent instanceof LivingEntity){
-                    if (ent.getPos().distanceTo(position.toCenterPos()) < 50) continue;
+                if(ent instanceof LivingEntity livingEntity){
+                    if (ent.getPos().distanceTo(position.toCenterPos()) > 50) continue;
 
-                    LivingEntity livingEntity = (LivingEntity) ent;
                     livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 10, 5), null);
                 }
             }
@@ -65,14 +69,22 @@ public class Sphinx extends AbstractIdol {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient && player.getStackInHand(hand).getItem().equals(Items.GOLD_BLOCK)) {
-            world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
-            world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS);
-            Vec3d dir = new Vec3d(player.getPos().x - pos.getX(), 2, player.getPos().z - pos.getZ()).normalize();
-            player.velocityModified = true;
-            player.setVelocity(dir);
+        ItemStack itemStack = player.getStackInHand(hand);
+
+        if (!state.get(CHARGED) && itemStack.isOf(Items.GOLD_BLOCK)) {
+            itemStack.decrement(1);
+
+            if (!world.isClient()) {
+                Vec3d center = pos.toCenterPos();
+                world.playSound(null, center.getX(), center.getY(), center.getZ(), UNDYING_CHARGE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                ((ServerWorld) world).spawnParticles(ParticleTypes.TOTEM_OF_UNDYING, center.getX(), center.getY(), center.getZ(), 10, 0, 0, 0, 0.1);
+                world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
+                Utils.ExplodeThrow(center, (ServerWorld) world, 10);
+            }
+
+            return ActionResult.success(world.isClient);
         }
 
-        return ActionResult.SUCCESS;
+        return ActionResult.PASS;
     }
 }
