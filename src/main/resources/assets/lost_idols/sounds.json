@@ -36,6 +36,12 @@
     "sounds": [
       "lost_idols:shulker_charge"
     ]
+  },
+  "sphinx_charge": {
+    "subtitle": "subtitles.lost_idols.sphinx_charge",
+    "sounds": [
+      "lost_idols:sphinx_charge"
+    ]
   }
 }
 

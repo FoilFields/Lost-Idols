@@ -13,6 +13,7 @@ public class Sounds {
     public static SoundEvent UNDYING_CHARGE = SoundEvent.of(GetIdentifier("undying_charge"));
     public static SoundEvent UNDYING_ACTIVATE = SoundEvent.of(GetIdentifier("undying_activate"));
     public static SoundEvent SHULKER_CHARGE = SoundEvent.of(GetIdentifier("shulker_charge"));
+    public static SoundEvent SPHINX_CHARGE = SoundEvent.of(GetIdentifier("sphinx_charge"));
 
     public static void init() {
         Registry.register(Registries.SOUND_EVENT, GetIdentifier("moai_spit"), MOAI_SPIT_EVENT);
@@ -21,5 +22,6 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, GetIdentifier("undying_charge"), UNDYING_CHARGE);
         Registry.register(Registries.SOUND_EVENT, GetIdentifier("undying_activate"), UNDYING_ACTIVATE);
         Registry.register(Registries.SOUND_EVENT, GetIdentifier("shulker_charge"), SHULKER_CHARGE);
+        Registry.register(Registries.SOUND_EVENT, GetIdentifier("sphinx_charge"), SPHINX_CHARGE);
     }
 }

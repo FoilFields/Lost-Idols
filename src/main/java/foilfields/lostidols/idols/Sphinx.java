@@ -3,6 +3,7 @@ package foilfields.lostidols.idols;
 import foilfields.lostidols.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -17,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
@@ -39,6 +41,7 @@ import org.joml.Vector3d;
 
 import java.util.List;
 
+import static foilfields.lostidols.init.Sounds.SPHINX_CHARGE;
 import static foilfields.lostidols.init.Sounds.UNDYING_CHARGE;
 
 public class Sphinx extends AbstractIdol {
@@ -76,8 +79,12 @@ public class Sphinx extends AbstractIdol {
 
             if (!world.isClient()) {
                 Vec3d center = pos.toCenterPos();
-                world.playSound(null, center.getX(), center.getY(), center.getZ(), UNDYING_CHARGE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                ((ServerWorld) world).spawnParticles(ParticleTypes.TOTEM_OF_UNDYING, center.getX(), center.getY(), center.getZ(), 10, 0, 0, 0, 0.1);
+
+                world.playSound(null, center.getX(), center.getY(), center.getZ(), SPHINX_CHARGE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+                BlockStateParticleEffect particleEffect = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.GOLD_BLOCK.getDefaultState());
+                ((ServerWorld) world).spawnParticles(particleEffect, center.getX(), center.getY(), center.getZ(), 10, 0.25, 0.25, 0.25, 0);
+
                 world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
                 Utils.ExplodeThrow(center, (ServerWorld) world, 10);
             }
