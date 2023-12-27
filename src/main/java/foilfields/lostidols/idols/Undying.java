@@ -42,7 +42,7 @@ public class Undying extends AbstractIdol {
         if (state.get(CHARGED) && !world.isClient) {
             Vec3d center = position.toCenterPos();
             Random random = Random.create();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 5; i++) {
                 Vec3d particlePosition = new Vec3d(20, 0, 0);
                 particlePosition = particlePosition.rotateY(random.nextFloat() * 180f);
                 particlePosition = particlePosition.rotateX(random.nextFloat() * 180f);
