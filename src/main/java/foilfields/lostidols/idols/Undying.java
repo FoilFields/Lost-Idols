@@ -92,7 +92,7 @@ public class Undying extends AbstractIdol {
 
             if (!world.isClient()) {
                 world.playSound(null, center.getX(), center.getY(), center.getZ(), UNDYING_CHARGE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                ((ServerWorld) world).spawnParticles(ParticleTypes.TOTEM_OF_UNDYING, center.getX(), center.getY(), center.getZ(), 10, 0, 0, 0, 0.1);
+                ((ServerWorld) world).spawnParticles(Particles.UNDYING, center.getX(), center.getY(), center.getZ(), 10, 0.2, 0.2, 0.2, 0.2);
                 world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
                 player.incrementStat(Stats.USED.getOrCreateStat(itemStack.getItem())); // This is kind of funny
             }
