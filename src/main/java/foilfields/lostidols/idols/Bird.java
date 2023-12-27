@@ -62,7 +62,7 @@ public class Bird extends AbstractIdol implements LandingBlock {
         ((ServerWorld) world).spawnParticles(particleEffect, center.getX(), center.getY(), center.getZ(), 10, 0.25, 0.25, 0.25, 0);
     }
 
-    // Sounds for landing and triggers charging if conditions met (aka had a fall time of over 35)
+    // Sounds for landing and triggers charging if had a fall time of over 35
     public void onLanding(World world, BlockPos pos, BlockState fallingBlockState, BlockState currentStateInPos, FallingBlockEntity fallingBlockEntity) {
         if (fallingBlockEntity.timeFalling > 35 && !fallingBlockState.get(CHARGED)) {
             world.setBlockState(pos, fallingBlockState.cycle(CHARGED), Block.NOTIFY_LISTENERS);
