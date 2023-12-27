@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "lost_idols:sphinx_pyramid",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 257216286,
+    "spacing": 32,
+    "separation": 8
+  }
+}
