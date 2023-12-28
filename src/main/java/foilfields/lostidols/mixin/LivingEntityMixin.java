@@ -58,9 +58,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable {
             if (statusEffectInstance != null) {
                 this.setHealth(1.0F);
                 this.clearStatusEffects();
-                this.addStatusEffect(new StatusEffectInstance(net.minecraft.entity.effect.StatusEffects.REGENERATION, 900, 1));
-                this.addStatusEffect(new StatusEffectInstance(net.minecraft.entity.effect.StatusEffects.ABSORPTION, 100, 1));
-                this.addStatusEffect(new StatusEffectInstance(net.minecraft.entity.effect.StatusEffects.FIRE_RESISTANCE, 800, 0));
+                this.addStatusEffect(new StatusEffectInstance(net.minecraft.entity.effect.StatusEffects.REGENERATION, 100, 1));
 
                 Vec3d position = this.getPos();
                 if (!getWorld().isClient) {
