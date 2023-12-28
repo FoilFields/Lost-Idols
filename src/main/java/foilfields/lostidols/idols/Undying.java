@@ -6,11 +6,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
@@ -55,9 +55,9 @@ public class Undying extends AbstractIdol {
             List<Entity> entities = world.getOtherEntities(null, area);
 
             for (Entity entity : entities) {
-                if (entity instanceof PlayerEntity) {
-                    if (entity.getPos().distanceTo(position.toCenterPos()) < 20.0f)
-                        ((PlayerEntity) entity).addStatusEffect(
+                if (entity instanceof LivingEntity livingEntity) {
+                    if (livingEntity.getPos().distanceTo(position.toCenterPos()) < 20.0f)
+                        livingEntity.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.UNDYING,
                                         10,
