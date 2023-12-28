@@ -8,7 +8,7 @@
   ],
   "step": "surface_structures",
   "spawn_overrides": {},
-  "terrain_adaptation": "beard_thin",
+  "terrain_adaptation": "bury",
   "start_pool": "lost_idols:magnet_shrine",
   "size": 1,
   "start_height": {
