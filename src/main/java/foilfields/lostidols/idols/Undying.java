@@ -57,13 +57,15 @@ public class Undying extends AbstractIdol {
             for (Entity entity : entities) {
                 if (entity instanceof PlayerEntity) {
                     if (entity.getPos().distanceTo(position.toCenterPos()) < 20.0f)
-                        ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(
-                                StatusEffects.UNDYING,
-                                9,
-                                0,
-                                true,
-                                true
-                        ));
+                        ((PlayerEntity) entity).addStatusEffect(
+                                new StatusEffectInstance(
+                                        StatusEffects.UNDYING,
+                                        10,
+                                        0,
+                                        false,
+                                        false,
+                                        true),
+                                null);
                 }
             }
         }
