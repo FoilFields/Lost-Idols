@@ -14,6 +14,8 @@
   "block.lost_idols.jungle_idol": "Jungle Idol",
   "block.lost_idols.undying_idol": "Undying Idol",
   "block.lost_idols.shulker_idol": "Shulker Idol",
+  "block.lost_idols.attraction_idol": "Attraction Idol",
+  "block.lost_idols.repulsion_idol": "Repulsion Idol",
   "stat.lost_idols.pop_moai_idol": "Eggs taken from Moai Idols",
   "stat.lost_idols.undying_idol_saves": "Times saved by Undying Idols",
   "effect.lost_idols.undying": "Undying",

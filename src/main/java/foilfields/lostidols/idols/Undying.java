@@ -45,7 +45,6 @@ public class Undying extends AbstractIdol {
             for (int i = 0; i < 5; i++) {
                 Vec3d particlePosition = new Vec3d(20, 0, 0);
                 particlePosition = particlePosition.rotateY(random.nextFloat() * 6.28318530718f);
-                particlePosition = particlePosition.rotateX(random.nextFloat() * 6.28318530718f);
                 particlePosition = particlePosition.add(center);
 
                 ((ServerWorld) world).spawnParticles(Particles.UNDYING, particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0, 0, 0, 0);

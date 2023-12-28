@@ -34,11 +34,12 @@ public class Blocks {
     public static final Promise PROMISE_IDOL = new Promise(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_GRAY).instrument(Instrument.COW_BELL).strength(0.3F).luminance((state) -> !state.get(Promise.CHARGED) ? 0 : 15).pistonBehavior(PistonBehavior.DESTROY).sounds(BlockSoundGroup.GLASS));
     public static final Undying UNDYING_IDOL = new Undying(AbstractBlock.Settings.create().mapColor(MapColor.GOLD).instrument(Instrument.COW_BELL).requiresTool().strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL).luminance((state) -> !state.get(Undying.CHARGED) ? 2 : 6));
     public static final Shulker SHULKER_IDOL = new Shulker(AbstractBlock.Settings.create().mapColor(MapColor.GOLD).instrument(Instrument.COW_BELL).requiresTool().strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL).luminance((state) -> !state.get(Undying.CHARGED) ? 0 : 3));
-
+    public static final Attraction ATTRACTION_IDOL = new Attraction(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(1.5F, 6.0F));
+    public static final Repulsion REPULSION_IDOL = new Repulsion(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(1.5F, 6.0F));
     public static final BlockEntityType<IdolBlockEntity> IDOL_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             GetIdentifier("idol_block_entity"),
-            FabricBlockEntityTypeBuilder.create(IdolBlockEntity::new, SPHINX_IDOL, BIRD_IDOL, MOAI_IDOL, JUNGLE_IDOL, PROMISE_IDOL, UNDYING_IDOL, SHULKER_IDOL).build()
+            FabricBlockEntityTypeBuilder.create(IdolBlockEntity::new, SPHINX_IDOL, BIRD_IDOL, MOAI_IDOL, JUNGLE_IDOL, PROMISE_IDOL, UNDYING_IDOL, SHULKER_IDOL, ATTRACTION_IDOL, REPULSION_IDOL).build()
     );
 
     public static void init() {
@@ -54,6 +55,8 @@ public class Blocks {
         Registry.register(Registries.BLOCK, GetIdentifier("promise_idol"), PROMISE_IDOL);
         Registry.register(Registries.BLOCK, GetIdentifier("undying_idol"), UNDYING_IDOL);
         Registry.register(Registries.BLOCK, GetIdentifier("shulker_idol"), SHULKER_IDOL);
+        Registry.register(Registries.BLOCK, GetIdentifier("attraction_idol"), ATTRACTION_IDOL);
+        Registry.register(Registries.BLOCK, GetIdentifier("repulsion_idol"), REPULSION_IDOL);
 
         Registry.register(Registries.ITEM, GetIdentifier("sphinx_idol"), new BlockItem(SPHINX_IDOL, new FabricItemSettings()));
         Registry.register(Registries.ITEM, GetIdentifier("moai_idol"), new BlockItem(MOAI_IDOL, new FabricItemSettings()));
@@ -62,6 +65,8 @@ public class Blocks {
         Registry.register(Registries.ITEM, GetIdentifier("promise_idol"), new BlockItem(PROMISE_IDOL, new FabricItemSettings()));
         Registry.register(Registries.ITEM, GetIdentifier("undying_idol"), new BlockItem(UNDYING_IDOL, new FabricItemSettings()));
         Registry.register(Registries.ITEM, GetIdentifier("shulker_idol"), new BlockItem(SHULKER_IDOL, new FabricItemSettings()));
+        Registry.register(Registries.ITEM, GetIdentifier("attraction_idol"), new BlockItem(ATTRACTION_IDOL, new FabricItemSettings()));
+        Registry.register(Registries.ITEM, GetIdentifier("repulsion_idol"), new BlockItem(REPULSION_IDOL, new FabricItemSettings()));
 
         ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP).register((entries -> {
             entries.add(SPHINX_IDOL);
@@ -71,6 +76,8 @@ public class Blocks {
             entries.add(PROMISE_IDOL);
             entries.add(UNDYING_IDOL);
             entries.add(SHULKER_IDOL);
+            entries.add(ATTRACTION_IDOL);
+            entries.add(REPULSION_IDOL);
         }));
     }
 }
