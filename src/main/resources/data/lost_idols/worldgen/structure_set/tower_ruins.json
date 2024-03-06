@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "lost_idols:tower_ruins",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 257216286,
+    "spacing": 32,
+    "separation": 8
+  }
+}
