@@ -65,7 +65,7 @@ public class Admire extends AbstractIdol {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
 
-        if (!state.get(CHARGED) && itemStack.isOf(Items.DIAMOND_BLOCK)) {
+        if (!state.get(CHARGED) && itemStack.isOf(Items.NETHERITE_INGOT)) {
             itemStack.decrement(1);
 
             if (!world.isClient()) {
@@ -73,7 +73,7 @@ public class Admire extends AbstractIdol {
 
                 world.playSound(null, center.getX(), center.getY(), center.getZ(), SPHINX_CHARGE, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
-                BlockStateParticleEffect particleEffect = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.GOLD_BLOCK.getDefaultState());
+                BlockStateParticleEffect particleEffect = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.NETHERITE_BLOCK.getDefaultState());
                 ((ServerWorld) world).spawnParticles(particleEffect, center.getX(), center.getY(), center.getZ(), 10, 0.25, 0.25, 0.25, 0);
 
                 world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);

@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "lost_idols:ruined_dark_forest_hut",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 34566734,
+    "spacing": 212,
+    "separation": 12
+  }
+}
