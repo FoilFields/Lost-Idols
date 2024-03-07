@@ -59,14 +59,17 @@ public class Sphinx extends AbstractIdol {
             Random random = Random.create();
 
             Vec3d center = position.toCenterPos();
-            if (random.nextFloat() < 0.02f) ((ServerWorld) world).spawnParticles(ParticleTypes.HEART, center.getX(), center.getY(), center.getZ(), 1, 0.25, 0.25, 0.25, 0.2);
+            if (random.nextFloat() < 0.04f) ((ServerWorld) world).spawnParticles(ParticleTypes.HEART, center.getX(), center.getY(), center.getZ(), 1, 0.25, 0.25, 0.25, 0.2);
 
             for(Entity ent: entities){
                 if(ent instanceof LivingEntity livingEntity){
                     if (ent.getPos().distanceTo(position.toCenterPos()) > 50) continue;
 
-                    if (random.nextFloat() < 0.01f) ((ServerWorld) world).spawnParticles(ParticleTypes.HEART, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), 1, 0.1, 0.1, 0.1, 0);
-                    livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.HEALTH_BOOST, 10, 4, false, false, true), null);
+                    if (random.nextFloat() < 0.02f) {
+                        livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 20, 4, false, false, true), null);
+                        ((ServerWorld) world).spawnParticles(ParticleTypes.HEART, livingEntity.getX(), livingEntity.getY() + 2.2, livingEntity.getZ(), 1, 0, 0, 0, 0.5);
+                    }
+
                 }
             }
         }
