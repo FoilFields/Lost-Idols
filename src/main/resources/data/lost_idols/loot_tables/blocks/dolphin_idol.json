@@ -6,7 +6,7 @@
 	  "entries": [
 		{
 		  "type": "minecraft:item",
-		  "name": "lost_idols:attraction_idol"
+		  "name": "lost_idols:dolphin_idol"
 		}
 	  ],
 	  "conditions": [
