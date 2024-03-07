@@ -77,7 +77,7 @@ public class Dolphin extends AbstractIdol {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
 
-        if (!state.get(CHARGED) && itemStack.isOf(Items.NAUTILUS_SHELL)) {
+        if (!state.get(CHARGED) && itemStack.isOf(Items.NAUTILUS_SHELL) && state.get(WATERLOGGED)) {
             itemStack.decrement(1);
 
             if (!world.isClient()) {
