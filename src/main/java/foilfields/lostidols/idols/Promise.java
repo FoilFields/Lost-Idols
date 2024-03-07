@@ -1,8 +1,10 @@
 package foilfields.lostidols.idols;
 
+import com.mojang.serialization.MapCodec;
 import foilfields.lostidols.init.Particles;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -31,6 +33,11 @@ import static foilfields.lostidols.init.Sounds.PROMISE_CHARGE;
 public class Promise extends AbstractIdol {
     public Promise(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return null;
     }
 
     @Override

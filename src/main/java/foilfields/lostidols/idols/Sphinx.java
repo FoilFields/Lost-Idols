@@ -1,10 +1,8 @@
 package foilfields.lostidols.idols;
 
+import com.mojang.serialization.MapCodec;
 import foilfields.lostidols.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -48,6 +46,11 @@ import static foilfields.lostidols.init.Sounds.UNDYING_CHARGE;
 public class Sphinx extends AbstractIdol {
     public Sphinx(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return null;
     }
 
     @Override

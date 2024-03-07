@@ -1,5 +1,6 @@
 package foilfields.lostidols.idols;
 
+import com.mojang.serialization.MapCodec;
 import foilfields.lostidols.Utils;
 import foilfields.lostidols.init.Particles;
 import net.minecraft.block.*;
@@ -29,6 +30,11 @@ import java.util.List;
 public class Bird extends AbstractIdol implements LandingBlock {
     public Bird(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return null;
     }
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {

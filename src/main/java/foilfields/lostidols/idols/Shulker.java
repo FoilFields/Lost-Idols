@@ -1,9 +1,11 @@
 package foilfields.lostidols.idols;
 
+import com.mojang.serialization.MapCodec;
 import foilfields.lostidols.init.Particles;
 import foilfields.lostidols.init.StatusEffects;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -35,6 +37,11 @@ import static net.minecraft.entity.effect.StatusEffects.LEVITATION;
 public class Shulker extends AbstractIdol {
     public Shulker(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return null;
     }
 
     @Override

@@ -1,9 +1,11 @@
 package foilfields.lostidols.idols;
 
+import com.mojang.serialization.MapCodec;
 import foilfields.lostidols.init.Sounds;
 import foilfields.lostidols.init.Statistics;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,6 +47,11 @@ public class Moai extends AbstractIdol {
         super(settings);
 
         this.setDefaultState(this.getDefaultState().with(POWERED, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return null;
     }
 
     /**
@@ -140,15 +147,16 @@ public class Moai extends AbstractIdol {
      * @param pos    The position of the Moai block in the world.
      * @param state  The current state of the Moai block.
      * @param player The player who broke the Moai block.
+     * @return
      */
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!world.isClient && state.get(CHARGED)) {
             spit(world, pos);
             player.incrementStat(Statistics.POP_MOAI_IDOL);
         }
 
-        super.onBreak(world, pos, state, player);
+        return super.onBreak(world, pos, state, player);
     }
 
     /**
