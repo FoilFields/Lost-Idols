@@ -47,7 +47,8 @@ public class Bird extends AbstractIdol implements LandingBlock {
     }
 
     public static boolean canFallThrough(BlockState state) {
-        return state.isAir() || state.isIn(BlockTags.FIRE) || state.isLiquid() || state.isReplaceable();
+        Material material = state.getMaterial();
+        return state.isAir() || state.isIn(BlockTags.FIRE) || material.isLiquid() || state.isReplaceable();
     }
 
     // Charge vfx

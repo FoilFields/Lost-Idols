@@ -4,6 +4,7 @@ import foilfields.lostidols.init.Particles;
 import foilfields.lostidols.init.StatusEffects;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -42,7 +43,8 @@ public class Shulker extends AbstractIdol {
         if (state.get(CHARGED) && !world.isClient) {
 
             BlockPos columnPos = position.add(0, 1, 0);
-            while (!world.isOutOfHeightLimit(columnPos) && !world.getBlockState(columnPos).isSolid()) {
+
+            while (!world.isOutOfHeightLimit(columnPos) && !world.getBlockState(columnPos).getMaterial().isSolid()) {
                 columnPos = columnPos.add(0, 1, 0);
             }
 
