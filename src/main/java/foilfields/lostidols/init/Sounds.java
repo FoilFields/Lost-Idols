@@ -1,9 +1,6 @@
 package foilfields.lostidols.init;
 
-import net.fabricmc.fabric.api.client.sound.v1.FabricSoundInstance;
-import net.minecraft.client.sound.SoundEntry;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.registry.Registry;
 
 import static foilfields.lostidols.LostIdols.GetIdentifier;
