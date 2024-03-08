@@ -94,7 +94,7 @@ public class Shulker extends AbstractIdol {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (!state.get(CHARGED) && itemStack.isOf(Items.PHANTOM_MEMBRANE)) {
-            Vec3d center = pos.toCenterPos();
+            Vec3d center = Vec3d.ofCenter(pos);
 
             itemStack.decrement(1);
 

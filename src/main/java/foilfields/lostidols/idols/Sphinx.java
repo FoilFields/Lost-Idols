@@ -45,12 +45,12 @@ public class Sphinx extends AbstractIdol {
 
             Random random = Random.create();
 
-            Vec3d center = position.toCenterPos();
+            Vec3d center = Vec3d.ofCenter(position);
             if (random.nextFloat() < 0.04f) ((ServerWorld) world).spawnParticles(ParticleTypes.HEART, center.getX(), center.getY(), center.getZ(), 1, 0.25, 0.25, 0.25, 0.2);
 
             for(Entity ent: entities){
                 if(ent instanceof LivingEntity livingEntity){
-                    if (ent.getPos().distanceTo(position.toCenterPos()) > 50) continue;
+                    if (ent.getPos().distanceTo(Vec3d.ofCenter(position)) > 50) continue;
 
                     if (random.nextFloat() < 0.02f) {
                         livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 20, 4, false, false, true), null);
@@ -75,7 +75,7 @@ public class Sphinx extends AbstractIdol {
             itemStack.decrement(1);
 
             if (!world.isClient()) {
-                Vec3d center = pos.toCenterPos();
+                Vec3d center = Vec3d.ofCenter(pos);
 
                 world.playSound(null, center.getX(), center.getY(), center.getZ(), SPHINX_CHARGE, SoundCategory.BLOCKS, 1.0F, 1.0F);
 

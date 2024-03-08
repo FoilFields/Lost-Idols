@@ -36,14 +36,14 @@ public class Attraction extends AbstractIdol {
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
         if (!world.isClient && state.get(POWERED)) {
-            Vec3d particlePosition = position.toCenterPos();
+            Vec3d particlePosition = Vec3d.ofCenter(position);
             ((ServerWorld) world).spawnParticles(new DustParticleEffect(DustParticleEffect.RED, 1.0f), particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0.25, 0.25, 0.25, 0.2);
 
             Random random = Random.create();
             for (int i = 0; i < 3; i++) {
                 particlePosition = new Vec3d(12, 0, 0);
                 particlePosition = particlePosition.rotateY(random.nextFloat() * 6.28318530718f);
-                particlePosition = particlePosition.add(position.toCenterPos());
+                particlePosition = particlePosition.add(Vec3d.ofCenter(position));
 
                 ((ServerWorld) world).spawnParticles(new DustParticleEffect(DustParticleEffect.RED, 1.0f), particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0, 0, 0, 0);
             }
@@ -51,7 +51,7 @@ public class Attraction extends AbstractIdol {
             Box area = new Box(new Vec3d(position.getX() - 12, position.getY() - 12, position.getZ() - 12), new Vec3d(position.getX() + 12, position.getY() + 12, position.getZ() + 12));
 
             for(Entity entity : world.getOtherEntities(null, area)) {
-                if(!(entity instanceof MobEntity && entity.getPos().distanceTo(position.toCenterPos()) < 12)) continue;
+                if(!(entity instanceof MobEntity && entity.getPos().distanceTo(Vec3d.ofCenter(position)) < 12)) continue;
                 if (random.nextFloat() < 0.3) ((ServerWorld) world).spawnParticles(new DustParticleEffect(DustParticleEffect.RED, 1.0f), entity.getX(), entity.getY(), entity.getZ(), 1, 0.25, 0.25, 0.25, 0.2);
                 ((MobEntity) entity).getNavigation().startMovingTo(position.getX(), position.getY(), position.getZ(), 1);
             }

@@ -1,4 +1,5 @@
 {
+  "name": "lost_idols:sphinx_pyramid",
   "fallback": "minecraft:empty",
   "elements": [
     {

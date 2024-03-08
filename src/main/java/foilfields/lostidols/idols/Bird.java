@@ -3,7 +3,6 @@ package foilfields.lostidols.idols;
 import foilfields.lostidols.Utils;
 import foilfields.lostidols.init.Particles;
 import net.minecraft.block.*;
-import net.minecraft.client.util.ParticleUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FallingBlockEntity;
@@ -12,10 +11,10 @@ import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
@@ -33,11 +32,11 @@ public class Bird extends AbstractIdol implements LandingBlock {
     }
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        world.scheduleBlockTick(pos, this, 2);
+        world.createAndScheduleBlockTick(pos, this, 2);
     }
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        world.scheduleBlockTick(pos, this, 2);
+        world.createAndScheduleBlockTick(pos, this, 2);
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
@@ -49,14 +48,14 @@ public class Bird extends AbstractIdol implements LandingBlock {
 
     public static boolean canFallThrough(BlockState state) {
         Material material = state.getMaterial();
-        return state.isAir() || state.isIn(BlockTags.FIRE) || material.isLiquid() || state.isReplaceable();
+        return state.isAir() || state.isIn(BlockTags.FIRE) || material.isLiquid() || state.getMaterial().isReplaceable();
     }
 
     // Charge vfx
     private void charge(World world, BlockPos pos, FallingBlockEntity fallingBlockEntity) {
         if (!fallingBlockEntity.isSilent()) {
-            world.playSound(null, pos, SoundEvents.ITEM_AXE_WAX_OFF, SoundCategory.BLOCKS);
-            world.playSound(null, pos, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.BLOCKS);
+            world.playSound(null, pos, SoundEvents.ITEM_AXE_WAX_OFF, SoundCategory.BLOCKS, 1, 1);
+            world.playSound(null, pos, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.BLOCKS, 1, 1);
         }
 
         Vec3d center = Vec3d.ofCenter(pos);
@@ -76,14 +75,14 @@ public class Bird extends AbstractIdol implements LandingBlock {
         }
 
         if (!world.isClient && !fallingBlockEntity.isSilent()) {
-            world.playSound(null, pos, SoundEvents.BLOCK_STONE_PLACE, SoundCategory.BLOCKS);
+            world.playSound(null, pos, SoundEvents.BLOCK_STONE_PLACE, SoundCategory.BLOCKS, 1, 1);
         }
     }
 
     // Sound effect when landing and breaking
     public void onDestroyedOnLanding(World world, BlockPos pos, FallingBlockEntity fallingBlockEntity) {
         if (!world.isClient && !fallingBlockEntity.isSilent()) {
-            world.playSound(null, pos, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.BLOCKS);
+            world.playSound(null, pos, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.BLOCKS, 1, 1);
         }
     }
 
@@ -116,12 +115,12 @@ public class Bird extends AbstractIdol implements LandingBlock {
                     // Damage effects
                     if (phantomEntity.timeUntilRegen <= 10.0F && phantomEntity.getHealth() > 0.0F) { // Attack cooldown
                         phantomEntity.damage(DamageSource.magic(playerEntity, playerEntity), 3);
-                        world.playSound(null, phantomEntity.getBlockPos(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.BLOCKS);
+                        world.playSound(null, phantomEntity.getBlockPos(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.BLOCKS, 1, 1);
                         ((ServerWorld) world).spawnParticles(ParticleTypes.SWEEP_ATTACK, entity.getX(), entity.getY(), entity.getZ(), 1, 0, 0, 0, 0);
                     }
 
                     // Beam to entity
-                    Vec3d sourcePosition = position.toCenterPos();
+                    Vec3d sourcePosition = Vec3d.ofCenter(position);
                     Vec3d difference = phantomEntity.getPos().subtract(sourcePosition);
                     int iterations = MathHelper.clamp((int) difference.length() / 10, 1, 3);
                     Random random = Random.create();

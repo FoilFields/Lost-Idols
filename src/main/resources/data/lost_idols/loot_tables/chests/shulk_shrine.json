@@ -88,20 +88,6 @@
           ]
         }
       ]
-    },
-    {
-      "rolls": 1,
-      "bonus_rolls": 0,
-      "entries": [
-        {
-          "type": "minecraft:empty",
-          "weight": 14
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:spire_armor_trim_smithing_template"
-        }
-      ]
     }
   ],
   "random_sequence": "minecraft:chests/end_city_treasure"

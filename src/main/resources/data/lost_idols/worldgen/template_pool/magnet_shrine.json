@@ -1,4 +1,5 @@
 {
+  "name": "lost_idols:magnet_shrine",
   "fallback": "minecraft:empty",
   "elements": [
     {

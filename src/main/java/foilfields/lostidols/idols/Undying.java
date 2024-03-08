@@ -40,7 +40,7 @@ public class Undying extends AbstractIdol {
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
         if (state.get(CHARGED) && !world.isClient) {
-            Vec3d center = position.toCenterPos();
+            Vec3d center = Vec3d.ofCenter(position);
             Random random = Random.create();
             for (int i = 0; i < 5; i++) {
                 Vec3d particlePosition = new Vec3d(20, 0, 0);
@@ -55,7 +55,7 @@ public class Undying extends AbstractIdol {
 
             for (Entity entity : entities) {
                 if (entity instanceof LivingEntity livingEntity) {
-                    if (livingEntity.getPos().distanceTo(position.toCenterPos()) < 20.0f)
+                    if (livingEntity.getPos().distanceTo(Vec3d.ofCenter(position)) < 20.0f)
                         livingEntity.addStatusEffect(
                                 new StatusEffectInstance(
                                         StatusEffects.UNDYING,
@@ -87,7 +87,7 @@ public class Undying extends AbstractIdol {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (!state.get(CHARGED) && itemStack.isOf(Items.EMERALD)) {
-            Vec3d center = pos.toCenterPos();
+            Vec3d center = Vec3d.ofCenter(pos);
 
             itemStack.decrement(1);
 

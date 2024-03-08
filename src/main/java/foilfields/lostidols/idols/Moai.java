@@ -100,7 +100,7 @@ public class Moai extends AbstractIdol {
      * @param pos   The position of the Moai block in the world.
      */
     public void spit(World world, BlockPos pos) {
-        world.playSound(null, pos, Sounds.MOAI_SPIT_EVENT, SoundCategory.BLOCKS);
+        world.playSound(null, pos, Sounds.MOAI_SPIT_EVENT, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
         Vec3i direction = world.getBlockState(pos).get(FACING).getVector();
 
@@ -127,7 +127,7 @@ public class Moai extends AbstractIdol {
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!world.isClient && !state.get(CHARGED)) {
             world.setBlockState(pos, state.cycle(CHARGED), Block.NOTIFY_LISTENERS);
-            world.playSound(null, pos, Sounds.MOAI_GROW_EVENT, SoundCategory.BLOCKS);
+            world.playSound(null, pos, Sounds.MOAI_GROW_EVENT, SoundCategory.BLOCKS, 1, 1);
         }
 
         super.randomTick(state, world, pos, random);

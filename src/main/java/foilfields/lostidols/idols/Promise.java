@@ -36,7 +36,7 @@ public class Promise extends AbstractIdol {
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
         if (state.get(CHARGED) && !world.isClient && Math.random() < 0.1f) {
-            Vec3d particlePosition = position.toCenterPos();
+            Vec3d particlePosition = Vec3d.ofCenter(position);
             ((ServerWorld) world).spawnParticles(Particles.FIREFLY, particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 5, 2, 5, 0.01);
         }
     }
@@ -45,7 +45,7 @@ public class Promise extends AbstractIdol {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (!state.get(CHARGED) && itemStack.isOf(Items.FLINT_AND_STEEL)) {
-            Vec3d center = pos.toCenterPos();
+            Vec3d center = Vec3d.ofCenter(pos);
             world.playSound(player, center.getX(), center.getY(), center.getZ(), PROMISE_CHARGE, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
             itemStack.damage(1, player, (playerx) -> {

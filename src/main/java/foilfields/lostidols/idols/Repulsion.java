@@ -14,13 +14,13 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 public class Repulsion extends AbstractIdol {
     public static final BooleanProperty POWERED = Properties.POWERED;
@@ -34,25 +34,26 @@ public class Repulsion extends AbstractIdol {
     @Override
     public void tick(BlockState state, World world, BlockPos position) {
         if (!world.isClient && state.get(POWERED)) {
-            Vec3d particlePosition = position.toCenterPos();
-            ((ServerWorld) world).spawnParticles(new DustParticleEffect(new Vector3f(0.0f, 0.0f, 1.0f), 1.0f), particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0.25, 0.25, 0.25, 0.2);
+            Vec3d particlePosition = Vec3d.ofCenter(position);
+
+            ((ServerWorld) world).spawnParticles(new DustParticleEffect(new Vec3f(0.0f, 0.0f, 1.0f), 1.0f), particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0.25, 0.25, 0.25, 0.2);
 
             Random random = Random.create();
             for (int i = 0; i < 3; i++) {
                 particlePosition = new Vec3d(12, 0, 0);
                 particlePosition = particlePosition.rotateY(random.nextFloat() * 6.28318530718f);
-                particlePosition = particlePosition.add(position.toCenterPos());
+                particlePosition = particlePosition.add(Vec3d.ofCenter(position));
 
-                ((ServerWorld) world).spawnParticles(new DustParticleEffect(new Vector3f(0.0f, 0.0f, 1.0f), 1.0f), particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0, 0, 0, 0);
+                ((ServerWorld) world).spawnParticles(new DustParticleEffect(new Vec3f(0.0f, 0.0f, 1.0f), 1.0f), particlePosition.getX(), particlePosition.getY(), particlePosition.getZ(), 1, 0, 0, 0, 0);
             }
 
             Box area = new Box(new Vec3d(position.getX() - 12, position.getY() - 12, position.getZ() - 12), new Vec3d(position.getX() + 12, position.getY() + 12, position.getZ() + 12));
 
             for(Entity entity : world.getOtherEntities(null, area)) {
-                if(!(entity instanceof MobEntity && entity.getPos().distanceTo(position.toCenterPos()) < 12)) continue;
-                if (random.nextFloat() < 0.3) ((ServerWorld) world).spawnParticles(new DustParticleEffect(new Vector3f(0.0f, 0.0f, 1.0f), 1.0f), entity.getX(), entity.getY(), entity.getZ(), 1, 0.25, 0.25, 0.25, 0.2);
-                Vec3d target = entity.getPos().subtract(position.toCenterPos()).normalize().multiply(15);
-                target = target.add(position.toCenterPos());
+                if(!(entity instanceof MobEntity && entity.getPos().distanceTo(Vec3d.ofCenter(position)) < 12)) continue;
+                if (random.nextFloat() < 0.3) ((ServerWorld) world).spawnParticles(new DustParticleEffect(new Vec3f(0.0f, 0.0f, 1.0f), 1.0f), entity.getX(), entity.getY(), entity.getZ(), 1, 0.25, 0.25, 0.25, 0.2);
+                Vec3d target = entity.getPos().subtract(Vec3d.ofCenter(position)).normalize().multiply(15);
+                target = target.add(Vec3d.ofCenter(position));
                 ((MobEntity) entity).getNavigation().startMovingTo(target.getX(), target.getY(), target.getZ(), 1);
             }
         }
