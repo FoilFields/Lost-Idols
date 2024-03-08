@@ -19,13 +19,13 @@
     "use_moai_idol": {
       "trigger": "minecraft:item_used_on_block",
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:block_state_property",
-            "block": "lost_idols:moai_idol",
-            "properties": {}
+        "location": {
+          "block": {
+            "blocks": [
+              "lost_idols:moai_idol"
+            ]
           }
-        ]
+        }
       }
     }
   },
