@@ -3,24 +3,17 @@ package foilfields.lostidols.mixin;
 import foilfields.lostidols.init.Particles;
 import foilfields.lostidols.init.Statistics;
 import foilfields.lostidols.init.StatusEffects;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.entity.Attackable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.stat.Stats;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,10 +22,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static foilfields.lostidols.init.Sounds.UNDYING_ACTIVATE;
-import static foilfields.lostidols.init.Sounds.UNDYING_CHARGE;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements Attackable {
+public abstract class LivingEntityMixin extends Entity {
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
@@ -47,7 +39,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable {
 
     @Inject(at = @At("RETURN"), method = "tryUseTotem(Lnet/minecraft/entity/damage/DamageSource;)Z", cancellable = true)
     private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
-        if (!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY) && !cir.getReturnValue()) {
+
+        if (!this.isInvulnerableTo(source) && !cir.getReturnValue()) {
             StatusEffectInstance statusEffectInstance = this.getStatusEffect(StatusEffects.UNDYING);
 
             if (((LivingEntity)(Object)this) instanceof ServerPlayerEntity) {

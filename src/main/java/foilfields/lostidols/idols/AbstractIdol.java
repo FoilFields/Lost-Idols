@@ -1,13 +1,11 @@
 package foilfields.lostidols.idols;
 
-import foilfields.lostidols.LostIdols;
 import foilfields.lostidols.blockentity.IdolBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -56,7 +54,7 @@ public abstract class AbstractIdol extends BlockWithEntity implements BlockEntit
     @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(CHARGED, false).with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        return this.getDefaultState().with(CHARGED, false).with(FACING, ctx.getPlayerFacing().getOpposite());
     }
 
     @Override

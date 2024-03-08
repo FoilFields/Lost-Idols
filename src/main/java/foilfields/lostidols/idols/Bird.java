@@ -7,6 +7,7 @@ import net.minecraft.client.util.ParticleUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FallingBlockEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -91,7 +92,10 @@ public class Bird extends AbstractIdol implements LandingBlock {
         if (random.nextInt(16) == 0) {
             BlockPos blockPos = pos.down();
             if (canFallThrough(world.getBlockState(blockPos))) {
-                ParticleUtil.spawnParticle(world, pos, random, new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()));
+                double d = (double)pos.getX() + random.nextDouble();
+                double e = (double)pos.getY() - 0.05;
+                double f = (double)pos.getZ() + random.nextDouble();
+                world.addParticle(new BlockStateParticleEffect(ParticleTypes.FALLING_DUST, state), d, e, f, 0.0, 0.0, 0.0);
             }
         }
     }
@@ -111,7 +115,7 @@ public class Bird extends AbstractIdol implements LandingBlock {
 
                     // Damage effects
                     if (phantomEntity.timeUntilRegen <= 10.0F && phantomEntity.getHealth() > 0.0F) { // Attack cooldown
-                        phantomEntity.damage(world.getDamageSources().indirectMagic(playerEntity, playerEntity), 3);
+                        phantomEntity.damage(DamageSource.magic(playerEntity, playerEntity), 3);
                         world.playSound(null, phantomEntity.getBlockPos(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.BLOCKS);
                         ((ServerWorld) world).spawnParticles(ParticleTypes.SWEEP_ATTACK, entity.getX(), entity.getY(), entity.getZ(), 1, 0, 0, 0, 0);
                     }
