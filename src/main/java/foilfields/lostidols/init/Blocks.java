@@ -6,9 +6,11 @@ import foilfields.lostidols.idols.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.Instrument;
 import net.minecraft.block.piston.PistonBehavior;
@@ -21,32 +23,30 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import static foilfields.lostidols.LostIdols.GetIdentifier;
 
 public class Blocks {
-    public static final RegistryKey<ItemGroup> ITEM_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, GetIdentifier("lost_idols_group"));
-
-    public static final Sphinx SPHINX_IDOL = new Sphinx(AbstractBlock.Settings.create().mapColor(MapColor.GOLD).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
-    public static final Moai MOAI_IDOL = new Moai(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
-    public static final Bird BIRD_IDOL = new Bird(AbstractBlock.Settings.create().mapColor(MapColor.DEEPSLATE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
-    public static final Promise PROMISE_IDOL = new Promise(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_GRAY).instrument(Instrument.COW_BELL).strength(0.3F).luminance((state) -> !state.get(Promise.CHARGED) ? 0 : 15).pistonBehavior(PistonBehavior.DESTROY).sounds(BlockSoundGroup.GLASS));
-    public static final Undying UNDYING_IDOL = new Undying(AbstractBlock.Settings.create().mapColor(MapColor.GOLD).instrument(Instrument.COW_BELL).requiresTool().strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL).luminance((state) -> !state.get(Undying.CHARGED) ? 2 : 6));
-    public static final Shulker SHULKER_IDOL = new Shulker(AbstractBlock.Settings.create().mapColor(MapColor.GOLD).instrument(Instrument.COW_BELL).requiresTool().strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL).luminance((state) -> !state.get(Undying.CHARGED) ? 0 : 3));
-    public static final Attraction ATTRACTION_IDOL = new Attraction(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(1.5F, 6.0F));
-    public static final Repulsion REPULSION_IDOL = new Repulsion(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(1.5F, 6.0F));
+    public static final Sphinx SPHINX_IDOL = new Sphinx(AbstractBlock.Settings.of(Material.STONE).mapColor(MapColor.GOLD).requiresTool().strength(3.5F));
+    public static final Moai MOAI_IDOL = new Moai(AbstractBlock.Settings.of(Material.STONE).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.5F));
+    public static final Bird BIRD_IDOL = new Bird(AbstractBlock.Settings.of(Material.STONE).mapColor(MapColor.DEEPSLATE_GRAY).requiresTool().strength(3.5F));
+    public static final Promise PROMISE_IDOL = new Promise(AbstractBlock.Settings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(0.3F).luminance((state) -> !state.get(Promise.CHARGED) ? 0 : 15).sounds(BlockSoundGroup.GLASS));
+    public static final Undying UNDYING_IDOL = new Undying(AbstractBlock.Settings.of(Material.METAL).mapColor(MapColor.GOLD).requiresTool().strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL).luminance((state) -> !state.get(Undying.CHARGED) ? 2 : 6));
+    public static final Shulker SHULKER_IDOL = new Shulker(AbstractBlock.Settings.of(Material.METAL).mapColor(MapColor.GOLD).requiresTool().strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL).luminance((state) -> !state.get(Undying.CHARGED) ? 0 : 3));
+    public static final Attraction ATTRACTION_IDOL = new Attraction(AbstractBlock.Settings.of(Material.METAL).mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5F, 6.0F));
+    public static final Repulsion REPULSION_IDOL = new Repulsion(AbstractBlock.Settings.of(Material.METAL).mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5F, 6.0F));
     public static final BlockEntityType<IdolBlockEntity> IDOL_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             GetIdentifier("idol_block_entity"),
             FabricBlockEntityTypeBuilder.create(IdolBlockEntity::new, SPHINX_IDOL, BIRD_IDOL, MOAI_IDOL, PROMISE_IDOL, UNDYING_IDOL, SHULKER_IDOL, ATTRACTION_IDOL, REPULSION_IDOL).build()
     );
 
-    public static void init() {
-        Registry.register(Registries.ITEM_GROUP, ITEM_GROUP, FabricItemGroup.builder()
-                .displayName(Text.translatable("itemGroup.lost_idols.lost_idols"))
-                .icon(() -> new ItemStack(MOAI_IDOL))
-                .build());
+    private static final ItemGroup ITEM_GROUP = FabricItemGroup.builder(GetIdentifier("lost_idols_group"))
+            .icon(() -> new ItemStack(MOAI_IDOL))
+            .build();
 
+    public static void init() {
         Registry.register(Registries.BLOCK, GetIdentifier("sphinx_idol"), SPHINX_IDOL);
         Registry.register(Registries.BLOCK, GetIdentifier("moai_idol"), MOAI_IDOL);
         Registry.register(Registries.BLOCK, GetIdentifier("bird_idol"), BIRD_IDOL);
