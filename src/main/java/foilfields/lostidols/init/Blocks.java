@@ -30,6 +30,8 @@ public class Blocks {
     public static final Sphinx SPHINX_IDOL = new Sphinx(AbstractBlock.Settings.create().mapColor(MapColor.GOLD).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
     public static final Moai MOAI_IDOL = new Moai(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
     public static final Bird BIRD_IDOL = new Bird(AbstractBlock.Settings.create().mapColor(MapColor.DEEPSLATE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
+    public static final Admire ADMIRE_IDOL = new Admire(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
+    public static final Dolphin DOLPHIN_IDOL = new Dolphin(AbstractBlock.Settings.create().mapColor(MapColor.DEEPSLATE_GRAY).instrument(Instrument.COW_BELL).requiresTool().strength(3.5F));
     public static final Promise PROMISE_IDOL = new Promise(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_GRAY).instrument(Instrument.COW_BELL).strength(0.3F).luminance((state) -> !state.get(Promise.CHARGED) ? 0 : 15).pistonBehavior(PistonBehavior.DESTROY).sounds(BlockSoundGroup.GLASS));
     public static final Undying UNDYING_IDOL = new Undying(AbstractBlock.Settings.create().mapColor(MapColor.GOLD).instrument(Instrument.COW_BELL).requiresTool().strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL).luminance((state) -> !state.get(Undying.CHARGED) ? 2 : 6));
     public static final Shulker SHULKER_IDOL = new Shulker(AbstractBlock.Settings.create().mapColor(MapColor.GOLD).instrument(Instrument.COW_BELL).requiresTool().strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL).luminance((state) -> !state.get(Undying.CHARGED) ? 0 : 3));
@@ -38,7 +40,7 @@ public class Blocks {
     public static final BlockEntityType<IdolBlockEntity> IDOL_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             GetIdentifier("idol_block_entity"),
-            FabricBlockEntityTypeBuilder.create(IdolBlockEntity::new, SPHINX_IDOL, BIRD_IDOL, MOAI_IDOL, PROMISE_IDOL, UNDYING_IDOL, SHULKER_IDOL, ATTRACTION_IDOL, REPULSION_IDOL).build()
+            FabricBlockEntityTypeBuilder.create(IdolBlockEntity::new, SPHINX_IDOL, ADMIRE_IDOL, DOLPHIN_IDOL, BIRD_IDOL, MOAI_IDOL, PROMISE_IDOL, UNDYING_IDOL, SHULKER_IDOL, ATTRACTION_IDOL, REPULSION_IDOL).build()
     );
 
     public static void init() {
@@ -49,6 +51,8 @@ public class Blocks {
 
         Registry.register(Registries.BLOCK, GetIdentifier("sphinx_idol"), SPHINX_IDOL);
         Registry.register(Registries.BLOCK, GetIdentifier("moai_idol"), MOAI_IDOL);
+        Registry.register(Registries.BLOCK, GetIdentifier("admire_idol"), ADMIRE_IDOL);
+        Registry.register(Registries.BLOCK, GetIdentifier("dolphin_idol"), DOLPHIN_IDOL);
         Registry.register(Registries.BLOCK, GetIdentifier("bird_idol"), BIRD_IDOL);
         Registry.register(Registries.BLOCK, GetIdentifier("promise_idol"), PROMISE_IDOL);
         Registry.register(Registries.BLOCK, GetIdentifier("undying_idol"), UNDYING_IDOL);
@@ -58,6 +62,8 @@ public class Blocks {
 
         Registry.register(Registries.ITEM, GetIdentifier("sphinx_idol"), new BlockItem(SPHINX_IDOL, new FabricItemSettings()));
         Registry.register(Registries.ITEM, GetIdentifier("moai_idol"), new BlockItem(MOAI_IDOL, new FabricItemSettings()));
+        Registry.register(Registries.ITEM, GetIdentifier("admire_idol"), new BlockItem(ADMIRE_IDOL, new FabricItemSettings()));
+        Registry.register(Registries.ITEM, GetIdentifier("dolphin_idol"), new BlockItem(DOLPHIN_IDOL, new FabricItemSettings()));
         Registry.register(Registries.ITEM, GetIdentifier("bird_idol"), new BlockItem(BIRD_IDOL, new FabricItemSettings()));
         Registry.register(Registries.ITEM, GetIdentifier("promise_idol"), new BlockItem(PROMISE_IDOL, new FabricItemSettings()));
         Registry.register(Registries.ITEM, GetIdentifier("undying_idol"), new BlockItem(UNDYING_IDOL, new FabricItemSettings()));
@@ -68,6 +74,8 @@ public class Blocks {
         ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP).register((entries -> {
             entries.add(SPHINX_IDOL);
             entries.add(BIRD_IDOL);
+            entries.add(ADMIRE_IDOL);
+            entries.add(DOLPHIN_IDOL);
             entries.add(MOAI_IDOL);
             entries.add(PROMISE_IDOL);
             entries.add(UNDYING_IDOL);

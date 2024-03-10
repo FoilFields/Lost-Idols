@@ -1,10 +1,8 @@
 package foilfields.lostidols.idols;
 
+import com.mojang.serialization.MapCodec;
 import foilfields.lostidols.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -44,6 +42,11 @@ public class Dolphin extends AbstractIdol {
 
     public Dolphin(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return null;
     }
 
     @Override
