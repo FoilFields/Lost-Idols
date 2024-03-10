@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "lost_idols:dolphin_shrine",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 257454586,
+    "spacing": 54,
+    "separation": 8
+  }
+}
